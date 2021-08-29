@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}
+
+body{
+    background: linear-gradient(90deg, #9ab729,#809f45);
+    padding: 20px;
+}
+
+.container-all{
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 100px;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.ctn-form{
+   width: 80%;
+   padding: 40px;
+   background: #f7f7f7; 
+}
+
+.logo{
+    width: 150px;
+    display: block;
+    margin: auto;
+}
+
+.tittle{
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 300;
+    color: #7a7a7a;
+}
+
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #7a7a7a;
+}
+
+input[type="text"],
+input[type="password"]{
+    width: 100%;
+    height: 30px;
+    background: rgba(0,0,0,0);
+    border: 0px;
+    outline: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    color:#1e1e1e;
+    font-size: 16px;
+}
+
+input[type="submit"]{
+    width: 100%;
+    height: 50px;
+    margin-top: 60px;
+    color:azure;
+    background: linear-gradient(90deg, #99b628,#809f45);
+    font-weight: 300;
+    cursor: pointer;
+    font-size: 18px;
+    border: 1px;
+    outline: 1px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+input[type="submit"]:hover{
+    background: linear-gradient(90deg, #809f45,#99b628);
+}
+
+.text-footer{
+    display: block;
+    margin-top: 50px;
+    text-align: center;
+    color: #7a7a7a;
+    font-weight: 300;
+}
+.text-footer a{
+    color: #99b727;
+    font-weight: 500;
+}
+
+/*LADO DERECHO*/
+.ctn-texto{
+    width: 100%;
+    background-image: url(../imagenes/derecha.jpg);
+    background-position: center;
+    background-size: cover;
+    padding: 40px;
+    position: relative;
+}
+
+.capa{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(90deg, #fada5e,#ffff00);
+    opacity: 0.7;
+}
+
+.tittle-description{
+    position: relative;
+    top: 80px;
+    color: #000000;
+    font-weight: 500;
+    font-size: 60px;
+}
+
+.text-description{
+    position: relative;
+    top: 100px;
+    color: #000000;
+    font-weight: 400;
+    font-size: 19px;
+}
+
+/*RESPONSIVE*/
+
+@media screen and (max-width:800px) {
+    .ctn-texto{
+        display: none;
+    }
+    .ctn-form{
+        margin: auto;
+        width: 100%;
+        background: white;
+    }
+}

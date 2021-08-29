@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link rel="stylesheet" href='{% static "css/estilo.css" %}'>
+        <meta name="viewport" content="width=device=width, user-scalable=no,
+        initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    </head>
+    <body>
+        <div class="container-all">
+            <div class="ctn-form">
+                <img src='{% static "imagenes/Logo R-Oil.jpg" %}' alt="" class="logo">
+                <h1 class="tittle">Iniciar Sesion</h1>
+                <form action="" method="POST"> 
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Iniciar">
+                </form>
+            </div>
+            <div class="ctn-texto">
+                <div class="capa"></div>
+                <h1 class="tittle-description">R-Oil Sistema de recoleccion</h1>
+                <p class="text-description">R-oil es un proyecto que buca mitigar el impacto
+                    ambietal que genera el mal desecho del aceite. El proyecto busca llear a 
+                    todas las instituciones de medellin y buscar un cambio en nuestros habitos
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
