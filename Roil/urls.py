@@ -21,7 +21,8 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 
 from usuario.views import Login, logoutUsuario
-from student import views as student_views
+#from student import views as student_views
+from estudiante import views as estudiante_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +30,9 @@ urlpatterns = [
     path('accounts/login/', Login.as_view(), name = "login"),
     path('logout/', login_required(logoutUsuario), name="logout"),
 
-    path('student/signup/', student_views.signup_view, name='student_signup'),
+    #path('student/signup/', student_views.signup_view, name='student_signup'),
+
+    path('estudiantes/', estudiante_views.signup_view, name='student_signup'),
     path('docentes/', include('docente.urls')),
     path('institucion/', include('instituciones.urls')),
 ]
