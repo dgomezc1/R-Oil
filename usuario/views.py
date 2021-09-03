@@ -2,7 +2,6 @@ import django
 from django.http import request
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
-from .forms import FormularioUsuario
 from django.views.generic.edit import FormView
 from .forms import FormularioLogin
 from django.urls import reverse_lazy
@@ -15,17 +14,6 @@ from django.contrib.auth import login, logout
 
 def home(reques):
     return HttpResponse("Hola")
-
-def registro(request):
-    if request.method == 'POST':
-        form = FormularioUsuario(data=request.POST)
-        if form.is_valid():
-            return HttpResponse("Funciona mamhuevo")
-        else:
-            return HttpResponse("f en el chat jajajajaajaj")
-    else:
-        form = FormularioUsuario()
-    return render(request, 'registro.html', {'form':form})
 
 class Login(FormView):
     template_name = 'index.html'

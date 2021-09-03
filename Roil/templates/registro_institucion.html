@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <form action="" method="POST" style="text-align: center;" class= "basic-grey">
+                {% csrf_token %}
+                <table style="color: rgb(0, 0, 0); margin: 20px auto;">
+                    {{form}}
+                </table>
+                  <input type="submit" value="Enviar" style="width: 150px;">
+            </form>
+        </div>
+    </body>
+</html>

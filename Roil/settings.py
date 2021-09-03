@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     # Local apps
     'usuario',
     'student',
+    'docente',
+    'instituciones',
+    'estudiante',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +62,8 @@ ROOT_URLCONF = 'Roil.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['D:/Eafit/Integrador/proyecto/Roil/templates'],
+        'DIRS': ['D:/Eafit/Integrador/proyecto/Roil/templates',
+        'D:/Eafit/Integrador/proyecto/docente/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
