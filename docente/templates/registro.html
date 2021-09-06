@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href='{% static "css/fordocente.css" %}'>
+        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -14,26 +14,117 @@
     </head>
     <body>
         <div>
-            <form action="" method="POST" style="text-align: center;" class= "basic-grey">
+            <div class="titulo">
+                <h2>Registro Docente</h2>
+            </div>
+            <form action="" method="POST" class= "basic-grey">
                 {% csrf_token %}
-                <table style="color: rgb(0, 0, 0); margin: 20px auto;">
-                    {{form}}
-                    <tr> 
-                    <td>
-                        <label><b>Seleccione</b></label>
-                    </td>
-                    <td>
-                    <select class="js-example-basic-single" name="state" required>
-                        {% for c in lista %}
-                        <option value="{{c.nombre}}">{{c.nombre}}</option>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Nombre de usuario</label>
+                    <div class="form-warp">
+                        {{form.username}}
+                    </div>
+                    {% if form.username.errors %}
+                    <ul>
+                        {% for error in form.username.errors %}
+                            <li class="errores">{{error}}</li>
                         {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Nombre</label>
+                    <div class="form-warp">
+                        {{form.first_name}}
+                    </div>
+                    {% if form.first_name.errors %}
+                    <ul>
+                        {% for error in form.first_name.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Apellido</label>
+                    <div class="form-warp">
+                        {{form.last_name}}
+                    </div>
+                    {% if form.last_name.errors %}
+                    <ul>
+                        {% for error in form.last_name.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Correo</label>
+                    <div class="form-warp">
+                        {{form.email}}
+                    </div>
+                    {% if form.email.errors %}
+                    <ul>
+                        {% for error in form.email.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Numero de identificacion</label>
+                    <div class="form-warp">
+                        {{form.ni}}
+                    </div>
+                    {% if form.ni.errors %}
+                    <ul>
+                        {% for error in form.ni.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Contraseña</label>
+                    <div class="form-warp">
+                        {{form.password1}}
+                    </div>
+                    {% if form.password1.errors %}
+                    <ol>
+                        {% for error in form.password1.errors %}
+                            <li class="errores">{{error|escape}}</li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Confirmacion contraseña</label>
+                    <div class="form-warp">
+                        {{form.password2}}
+                    </div>
+                    {% if form.password2.errors %}
+                    <ul>
+                        {% for error in form.password2.errors %}
+                            <li class="errores">{{error|escape}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="opciones">
+                    <label>Seleccione</label>
+                    <div>
+                        <select class="js-example-basic-single" name="state" required>
+                            {% for c in lista %}
+                            <option value="{{c.nombre}}">{{c.nombre}}</option>
+                            {% endfor %}
                       </select>
-                      </td>
-                    </tr>
-                </table>
-                  <input type="submit" value="Enviar" style="width: 150px;">
+                    </div>
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Enviar">
+                </div>
+                
             </form>
         </div>
     </body>
 </html>
-

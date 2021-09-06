@@ -8,11 +8,8 @@ class User(AbstractUser):
     first_name = models.CharField('first name', max_length=150, blank=True, null=True)
     last_name = models.CharField('last name', max_length=150, blank=True, null=True)
     email = models.EmailField('email address', blank=False, null=False)
-
     institucion = models.ForeignKey(Institucion, blank = True, null = True, on_delete=models.CASCADE)
-
     ni = models.BigIntegerField('numero_identificacion', unique=True,blank=True, null=True)
-    
     usuario_inst = models.BooleanField(default=False)
     docente = models.BooleanField(default=False)
     admin_proyecto = models.BooleanField(default=False)
@@ -21,6 +18,8 @@ class User(AbstractUser):
         return self.institucion
     def get_usuario_inst(self):
         return self.usuario_inst
+    def get_admin(self):
+        return self.admin_proyecto
 
     class Meta:
         verbose_name = 'Usuario'

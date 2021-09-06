@@ -1,13 +1,13 @@
-import django
 from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Institucion
 from .forms import FormularioInstitucion
+from usuario.mixins import permisos_institucion_docentes
 
 # Create your views here.
 
-class registro(CreateView):
+class registro(LoginRequiredMixin,permisos_institucion_docentes,CreateView):
     model = Institucion
     form_class = FormularioInstitucion
     template_name = "registro_institucion.html"

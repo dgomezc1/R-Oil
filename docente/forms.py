@@ -3,7 +3,8 @@ from usuario.models import User
 from django.contrib.auth.models import Group
 
 class FormularioDocente(forms.ModelForm):
-    ni = forms.IntegerField(label='numero identificacion',required=True)
+    ni = forms.IntegerField(label='numero identificacion',required=True,
+    widget=forms.NumberInput(attrs={'placeholder':'Ingrese numero identificacion..'}))
     password1 = forms.CharField(label='contraseña', widget=forms.PasswordInput(
         attrs={
             'class':'form-control',
@@ -25,11 +26,11 @@ class FormularioDocente(forms.ModelForm):
         model = User
         fields  = ('username', 'first_name', 'last_name', 'email')
         widgets = {'email':forms.EmailInput(
-            attrs={'placeholder':'correo electrnico',
+            attrs={'placeholder':'ingrese correo electronico...',
             }),
-            'first_name':forms.TextInput(attrs={'placholder':'nombre'}),
-            'last_name': forms.TextInput(attrs={'placeholder':'apellido'}),
-            'username': forms.TextInput(attrs={'placeholder':'ingrese nombre usuario'}),
+            'first_name':forms.TextInput(attrs={'placeholder':'ingrese nombre...'}),
+            'last_name': forms.TextInput(attrs={'placeholder':'ingrese apellido...'}),
+            'username': forms.TextInput(attrs={'placeholder':'ingrese nombre usuario...'}),
         }
 
     def clean_password2(self):

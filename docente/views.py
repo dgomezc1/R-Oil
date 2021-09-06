@@ -1,4 +1,3 @@
-import django
 from django.db.models.fields import mixins
 from django.http import request
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -9,23 +8,11 @@ from django.views.generic.edit import CreateView
 from usuario.models import User
 from instituciones.models import Institucion
 from django.contrib.auth.mixins import LoginRequiredMixin
+from usuario.mixins import permisos_institucion_docentes
 
 # Create your views here.
 
-
-def registro(request):
-    if request.method == 'POST':
-        form = FormularioDocente(data=request.POST)
-        if form.is_valid():
-            form.crear_usuario()
-            return HttpResponse("Envio correcto de datos")
-        else:
-            return render(request, 'registro.html', {'form':form})
-    else:
-        form = FormularioDocente()
-    return render(request, 'registro.html', {'form':form})
-
-class registro2(LoginRequiredMixin,CreateView):
+class registro2(LoginRequiredMixin,permisos_institucion_docentes,CreateView):
     model = User
     form_class = FormularioDocente
     template_name = 'registro.html'
