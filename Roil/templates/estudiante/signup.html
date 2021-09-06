@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
 {% block head_content %}
-<title>Student sign-up</title>
+<title>User sign-up</title>
 {% endblock%}
 
 {% block container %}
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab optio amet vel totam deserunt, fugit labore impedit qui. Explicabo eos voluptatibus, velit necessitatibus nisi inventore rerum itaque aperiam tempora accusamus!</p>
+    {% if error %}
+        <p class="alert alert-danger">{{ error }}</p>
+    {% endif %}
+    <form action="{% url 'student_signup' %}" method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        
+        <button class="btn btn-primary btn-block mt-5" type="submit">Enviar registro</button>
+        
+    </form>
+    
 {% endblock%}

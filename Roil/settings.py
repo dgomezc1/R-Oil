@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 
     # Local apps
     'usuario',
-    'student',
     'docente',
     'instituciones',
     'estudiante',
