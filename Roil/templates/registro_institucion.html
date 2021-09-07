@@ -2,15 +2,70 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
     </head>
     <body>
         <div>
-            <form action="" method="POST" style="text-align: center;" class= "basic-grey">
+            <div class="titulo">
+                <h2>Registro Institucion</h2>
+            </div>
+            <form action="" method="POST" class= "basic-grey">
                 {% csrf_token %}
-                <table style="color: rgb(0, 0, 0); margin: 20px auto;">
-                    {{form}}
-                </table>
-                  <input type="submit" value="Enviar" style="width: 150px;">
+                <div class = "opciones">
+                    <label for="{{form.nombre.id_for_label}}">Nombre de la Institucion</label>
+                    <div class="form-warp">
+                        {{form.nombre}}
+                    </div>
+                    {% if form.nombre.errors %}
+                    <ul>
+                        {% for error in form.nombre.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.localidad.id_for_label}}">Municipio</label>
+                    <div class="form-warp">
+                        {{form.localidad}}
+                    </div>
+                    {% if form.localidad.errors %}
+                    <ul>
+                        {% for error in form.localidad.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.barrio.id_for_label}}">Barrio</label>
+                    <div class="form-warp">
+                        {{form.barrio}}
+                    </div>
+                    {% if form.barrio.errors %}
+                    <ul>
+                        {% for error in form.barrio.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.sede.id_for_label}}">Sede</label>
+                    <div class="form-warp">
+                        {{form.sede}}
+                    </div>
+                    {% if form.sede.errors %}
+                    <ul>
+                        {% for error in form.sede.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Enviar">
+                </div>
             </form>
         </div>
     </body>
