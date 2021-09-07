@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'docente',
     'instituciones',
     'estudiante',
+    'aceite',
 ]
 
 MIDDLEWARE = [
