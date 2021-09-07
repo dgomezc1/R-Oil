@@ -23,5 +23,5 @@ class FormularioInstitucion(forms.ModelForm):
     def clean_localidad(self):
         localidad = self.cleaned_data.get('localidad')
         if bool(re.search(r'\d', localidad)):
-            raise forms.ValidationError('El nombre contiene caracteres invalidos')
+            raise forms.ValidationError('El barrio contiene caracteres invalidos')
         return localidad
