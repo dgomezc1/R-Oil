@@ -56,6 +56,19 @@ class SignupForm(forms.Form):
             raise forms.ValidationError('Email is already in use.')
         return email # Es necesario que cuando se haga la validación de un campo, se regrese el campo
 
+    # Validación especifica
+    def clean_email(self):
+        """ni must be unique."""
+        # Los datos que ya limpio django por nosotros
+        ni = self.cleaned_data['ni']
+        # Usamos filter porque si usamos get y no existe, lanzaría una excepción
+        # exist() solo para saber si existe (booleano)
+        ni_taken = User.objects.filter(ni=ni).exists() 
+        if ni_taken:
+            # Django se encarga de subir la excepción hasta el html
+            raise forms.ValidationError('Ni is already in use.')
+        return ni # Es necesario que cuando se haga la validación de un campo, se regrese el campo
+
     # Validación final de todos los datos
     def clean(self):
         """Verify password confirmation match."""
@@ -70,7 +83,7 @@ class SignupForm(forms.Form):
 
         return data
 
-    def save(self):
+    def save(self, Institucion):
         """Create user and student."""
         data = self.cleaned_data
         # Hay un dato que no nos sirve, que es password confirmation
@@ -82,10 +95,13 @@ class SignupForm(forms.Form):
             'ni': data['ni'],
             'usuario_inst': True,
             'username': data['username'],
-            'password': data['password'],
+            'institucion': Institucion
         }
         # Le enviamos todo el formulario
+
         user = User.objects.create(**usuario)
+        user.set_password(data['password'])
+        user.save()
 
         estudiante = {
             'user': user,
