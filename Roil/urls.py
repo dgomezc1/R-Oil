@@ -32,5 +32,6 @@ urlpatterns = [
     path('estudiantes/', estudiante_views.signup_view, name='student_signup'),
     path('docentes/', include('docente.urls')),
     path('institucion/', include('instituciones.urls')),
+    path('aceite/', include('aceite.urls')),
 ]
 
