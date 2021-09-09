@@ -1,11 +1,71 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
+    </head>
     <body>
         <div>
+            <div class="titulo">
+                <h2>Registro de Aceite</h2>
+            </div>
             <form action="" method="POST" class= "basic-grey">
                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Enviar">
+                <div class = "opciones">
+                    <label for="{{form.nombre.id_for_label}}">Nombre del estudiante</label>
+                    <div class="form-warp">
+                        {{form.nombre}}
+                    </div>
+                    {% if form.nombre.errors %}
+                    <ul>
+                        {% for error in form.nombre.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.username.id_for_label}}">Username del estudiante</label>
+                    <div class="form-warp">
+                        {{form.username}}
+                    </div>
+                    {% if form.username.errors %}
+                    <ul>
+                        {% for error in form.username.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.ni.id_for_label}}">Numero de identificacion</label>
+                    <div class="form-warp">
+                        {{form.ni}}
+                    </div>
+                    {% if form.ni.errors %}
+                    <ul>
+                        {% for error in form.ni.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.cantidad_aceite.id_for_label}}">Cantidad de aceite recolectado</label>
+                    <div class="form-warp">
+                        {{form.cantidad_aceite}}
+                    </div>
+                    {% if form.cantidad_aceite.errors %}
+                    <ul>
+                        {% for error in form.cantidad_aceite.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Enviar">
+                </div>
             </form>
 
         </div>
