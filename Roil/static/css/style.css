@@ -85,6 +85,7 @@ header {
 	width: calc(100% - 345px);
 	top: 0;
 	z-index: 100;
+	background: #fff ;
 }
 
 header h2{
