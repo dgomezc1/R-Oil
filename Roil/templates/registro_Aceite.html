@@ -1,6 +1,6 @@
+{% extends "index1.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
+{% block content %}
     <head>
         <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
     </head>
@@ -69,6 +69,4 @@
             </form>
 
         </div>
-    </body>
-
-</html>
+        {% endblock %}

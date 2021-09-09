@@ -1,8 +1,8 @@
+{% extends "index1.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
+{% block content %}
     <head>
-        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -11,8 +11,9 @@
             $('.js-example-basic-single').select2();
         });
         </script>
+        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
     </head>
-    <body>
+
         <div>
             <div class="titulo">
                 <h2>Registro Docente</h2>
@@ -20,7 +21,7 @@
             <form action="" method="POST" class= "basic-grey">
                 {% csrf_token %}
                 <div class = "opciones">
-                    <label for="{{form.username.id_for_label}}">Nombre de usuario</label>
+                    <label for="{{f.id_for_label}}">Nombre de usuario</label>
                     <div class="form-warp">
                         {{form.username}}
                     </div>
@@ -33,7 +34,7 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
-                    <label for="{{form.first_name.id_for_label}}">Nombre</label>
+                    <label for="{{f.id_for_label}}">Nombre</label>
                     <div class="form-warp">
                         {{form.first_name}}
                     </div>
@@ -46,7 +47,7 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
-                    <label for="{{form.last_name.id_for_label}}">Apellido</label>
+                    <label for="{{f.id_for_label}}">Apellido</label>
                     <div class="form-warp">
                         {{form.last_name}}
                     </div>
@@ -59,7 +60,7 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
-                    <label for="{{form.email.id_for_label}}">Correo</label>
+                    <label for="{{f.id_for_label}}">Correo</label>
                     <div class="form-warp">
                         {{form.email}}
                     </div>
@@ -72,7 +73,7 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
-                    <label for="{{form.ni.id_for_label}}">Numero de identificacion</label>
+                    <label for="{{f.id_for_label}}">Numero de identificacion</label>
                     <div class="form-warp">
                         {{form.ni}}
                     </div>
@@ -85,7 +86,7 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
-                    <label for="{{form.password1.id_for_label}}">Contraseña</label>
+                    <label for="{{f.id_for_label}}">Contraseña</label>
                     <div class="form-warp">
                         {{form.password1}}
                     </div>
@@ -98,7 +99,7 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
-                    <label for="{{form.password2.id_for_label}}">Confirmacion contraseña</label>
+                    <label for="{{f.id_for_label}}">Confirmacion contraseña</label>
                     <div class="form-warp">
                         {{form.password2}}
                     </div>
@@ -126,5 +127,4 @@
                 
             </form>
         </div>
-    </body>
-</html>
+        {% endblock %}
