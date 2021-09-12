@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Institucion
 from .forms import FormularioInstitucion
 from usuario.mixins import permisos_institucion_docentes
+from django.core import management
 
 # Create your views here.
 
@@ -13,6 +14,7 @@ class registro(LoginRequiredMixin,permisos_institucion_docentes,CreateView):
     template_name = "registro_institucion.html"
 
     def post(self, request, *args, **kwargs):
+        management.call_command('runcrons')
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()

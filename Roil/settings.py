@@ -45,6 +45,14 @@ INSTALLED_APPS = [
     'instituciones',
     'estudiante',
     'aceite',
+
+    #copia de seguridad
+    'dbbackup',
+    'django_cron',
+]
+
+CRON_CLASSES = [
+    "Roil.cron.Backup",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +142,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'Roil/static'),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'usuario.User'
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/'backup'}
