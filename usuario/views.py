@@ -9,11 +9,12 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
-def home(reques):
-    return HttpResponse("Hola")
+@login_required
+def home(request):
+    return render(request,'index1.html')
 
 class Login(FormView):
     template_name = 'index.html'
