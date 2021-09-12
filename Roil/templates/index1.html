@@ -40,7 +40,7 @@
 					<span>Registro de aceite</span></a>
 				</li>
 				<li>
-					<a href=""><span class="las la-shopping-bag"></span>
+					<a href="{% url 'student_signup' %}" class="{% if request.path == '/estudiantes/' %}active{% endif %}"><span class="las la-shopping-bag"></span>
 					<span>Registro de estudiante</span></a>
 				</li>
 				<li>
