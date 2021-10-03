@@ -9,30 +9,26 @@
 		</style>
 		<meta charset="utf-8">
 		<title>R-Oil</title>
-		<link rel="stylesheet" href="[https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css](https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css)">
-
+		<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 		<link rel="stylesheet" href='{%static "css/style.css" %}'>
 
 	</head>
+
 <body>
+	<input type="checkbox" id="nav-toggle">
+	<div class="sidebar">
+		<div class="sidebar-brand">
+			<h1><span class="las la-tint" style="color: white;"></span><span>R-Oil</span></h1>
+		</div>
 
-
-<div class="sidebar">
-	<div class="sidebar-brand">
-
-		<h2><img src='{% static "imagenes/Logo R-Oil (1).jpg" %}' width="40px" height="40px" alt=""></span> R-Oil</h2>
-
-	</div>
-
-	<div class="sidebar-menu">
-		<ul>
-
+		<div class="sidebar-menu">
+			<ul>
 				<li>
-					<a href="{% url 'registro docente' %}" class="{% if request.path == '/docentes/registro/' %}active{% endif %}"><span class="las la-igloo"></span>
+					<a href="{% url 'registro docente' %}" class="{% if request.path == '/docentes/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
 					<span>Registro de docente</span></a>
 				</li>
 				<li>
-					<a href="{% url 'registro_institucion' %}" class="{% if request.path == '/institucion/registroinst/' %}active{% endif %}"><span class="las la-users"></span>
+					<a href="{% url 'registro_institucion' %}" class="{% if request.path == '/institucion/registroinst/' %}active{% endif %}"><span class="las la-school"></span>
 					<span>Registro de institucion</span></a>
 				</li>
 				<li>
@@ -40,105 +36,52 @@
 					<span>Registro de aceite</span></a>
 				</li>
 				<li>
-					<a href="{% url 'student_signup' %}" class="{% if request.path == '/estudiantes/' %}active{% endif %}"><span class="las la-shopping-bag"></span>
+					<a href="{% url 'student_signup' %}" class="{% if request.path == '/estudiantes/' %}active{% endif %}"><span class="las la-user-graduate"></span>
 					<span>Registro de estudiante</span></a>
 				</li>
 				<li>
-					<!--<a href=""><span class="las la-receipt"></span>
-					<span>Premios disponibles</span></a>
-				</li>
-				<li>
-					<a href=""><span class="las la-user-circle"></span>
-					<span>Puntos</span></a>
-				</li>-->
-				<li>
-					<a href=""><span class="las la-clipboard-list"></span>
+					<a href=""><span class="las la-money-check"></span>
 					<span>Informe</span></a>
 				</li>
 			</ul>
 		</div>
-</div>
+	</div>
 
-<div class="main-content">
-	<header>
-		<h2>
-			<label for="">
-				<span class="las la-bars"></span>
-			</label>
+	<div class="main-content">
+		<header>
+			<h2>
+				<label for="nav-toggle">
+					<span class="las la-bars"></span>
+				</label>
+				Dashboard
+			</h2>
 
-			Dashboard
-		</h2>
-
-		<div class="search-wrapper">
-			<span class="las la-search"></span>
-			 <input type="search" placeholder="Search here"/>
-		</div>
-
-		<div class="user-wrapper">
-			<img src='{% static "imagenes/Logo R-Oil (1).jpg" %}' width="40px" height="40px" alt="">
-			<div>
-				<h4>Samuel Meneses</h4>
-				<small>Administrador</small>
+			<div class="search-wrapper">
+				<span class="las la-search"></span>
+				<input type="search" placeholder="Search here"/>
 			</div>
-		</div>
-	</header>
 
-	<main>
-
-		<div class="cards">
-			<div class="card-single">
+			<div class="user-wrapper">
+				<img src='{% static "imagenes/Logo R-Oil (1).jpg" %}' width="40px" height="40px" alt="">
 				<div>
+					<h4>{{ user.first_name }}&nbsp;{{ user.last_name }}</h4>
+					{% if user.admin_proyecto %}
+					<small>Administrador</small>
+					{% else %}
+					<small>Docente</small>
+					{% endif %}
+				</div>
+			</div>
+		</header>
+
+		<main>
+			<div class="cards">
+				<div class="card-single">
 					{% block content %}
-    				{% endblock %}
-					<!--<center>
-						<img src="MicrosoftTeams-image (30).png" width="775px" height="775px" alt="">
-					</center>-->
-					
-					
-
-					<!--<h1>54</h1>
-					<span>Instituciones registradas</span>
-				</div>
-				<div>
-					<span class="las la-users"></span>
+					{% endblock %}
 				</div>
 			</div>
-
-			<div class="card-single">
-				<div>
-					<h1>79</h1>
-					<span>Projects</span>
-				</div>
-				<div>
-					<span class="las la-clipboard-list"></span>
-				</div>
-			</div>
-
-			<div class="card-single">
-				<div>
-					<h1>124</h1>
-					<span>Orders</span>
-				</div>
-				<div>
-					<span class="las la-shopping-bag"></span>
-				</div>
-			</div>
-
-			<div class="card-single">
-				<div>
-					<h1>$6k</h1>
-					<span>Income</span>
-				</div>-->
-				<div>
-					<span class="las la-google-wallet"></span>
-				</div>
-			</div>
-		</div>
-
-	</main>
-</div>
-
-
-
+		</main>
+	</div>
 </body>
 </html>

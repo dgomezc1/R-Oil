@@ -13,44 +13,43 @@
 	list-style-type: none;
 	text-decoration: none;
 	font-family: 'Poppins', sans-serif;
-
-
 }
 
 .sidebar{
 text-decoration: none;
-width: 345px;
+width: 300px;
 position: fixed;
 left: 0;
 top: 0;
 height: 100%;
 background: var(--main-color);
 z-index: 100%;
+transition: width 300ms;
 }
 
 .sidebar-brand{
-height: 90px;
-padding: 1rem 0rem 1rem 2rem;
+height: 82px;
+padding: 1.3rem 0rem 1rem 4.2rem;
 color: #fff;
 
 }
 
 .sidebar-brand span{
 display: inline-block;
-padding-right: 1rem;
+padding-right: 0.5rem;
 }
 
 .sidebar-menu{
-	margin-top: 1rem;
+	margin-top: 0.2rem;
 }
 
-.sidebar-menu li {
+.sidebar-menu li{
 width: 100%;
 margin-bottom: 1.3rem;
 padding-left: 1rem;
 }
 
-.sidebar-menu a {
+.sidebar-menu a{
 padding-left: 1rem;
 display: block;
 color: #fff;
@@ -71,24 +70,58 @@ font-size: 1.5rem;
 padding-right: 1rem;
 }
 
+#nav-toggle:checked + .sidebar {
+	width: 70px;
+}
+
+#nav-toggle:checked + .sidebar .sidebar-brand{
+	padding-left: 1.5rem;
+}
+#nav-toggle:checked + .sidebar li a {
+	padding-left: 1rem;
+}
+
+#nav-toggle:checked + .sidebar .sidebar-brand h1 span:last-child,
+#nav-toggle:checked + .sidebar li a span:last-child {
+	display: none;
+}
+
+
+
+#nav-toggle:checked ~ .main-content header {
+	width: calc(100% - 70px);
+	left: 70px;
+}
+
 .main-content{
-margin-left: 345px;
+	transition: margin-left 300ms;
+	margin-left: 300px;
+}
+
+#nav-toggle:checked ~ .main-content {
+	margin-left: 70px;
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	padding: 1rem 1.5rem;
+	padding: 1rem 1rem;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 	position: fixed;
-	left: 345px;
-	width: calc(100% - 345px);
+	left: 300px;
+	width: calc(100% - 300px);
 	top: 0;
 	z-index: 100;
 	background: #fff ;
+	transition: left 300ms;
+}
+
+#nav-toggle{
+	display: none;
 }
 
 header h2{
+	padding-top: 0.5rem;
 	color: #222;
 }
 
@@ -136,34 +169,21 @@ header label span{
 
 main{
 	margin-top: 85px;
-	padding: 2rem 1.5rem;
+	padding: 0.5rem 0.5rem;
 	background: #f1f5f9;
-	min-height: calc(100vh - 90px);
+	min-height: calc(100% - 90px);
 }
 
 .cards {
 	display: grid;
-
-	margin-top: 1rem ;
-
+	margin-top: 0;
 }
 
 .card-single{
 	display:block;
-
 	background: #fff;
-	padding: 2rem;
+	padding: 1rem;
 	border-radius: 2px;
 
 }
 
-
-.card-single span:last-child{
-	color:  var(--text-grey);
-	font-size: 19px;
-}
-
-.card-single span:first-child{
-	
-
-}
