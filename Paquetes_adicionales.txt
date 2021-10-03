@@ -1,0 +1,10 @@
+Paquetes necesarios para el funcionamiento del proyecto:
+asgiref==3.4.1
+dbbackup-tools==0.1.5
+Django==3.2.6
+django-common-helpers==0.9.2
+django-cron==0.5.1
+django-crontab==0.7.1
+django-dbbackup==3.3.0
+djangorestframework==3.12.4
+Pillow==8.3.1
