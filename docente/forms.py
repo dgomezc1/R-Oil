@@ -73,9 +73,7 @@ class FormularioDocente(forms.ModelForm):
         user = User.objects.create_user(self.cleaned_data['username'], self.cleaned_data['email']) 
         user.last_name = self.cleaned_data['last_name']
         user.first_name = self.cleaned_data['first_name']
-        #user.ni = self.cleaned_data['ni']
-        #user.institucion = institucion
-        user.docente = True
+        user.admin_docente = True
         user.groups.add(grupo)
         user.set_password(self.cleaned_data['password1'])
         user.save()
