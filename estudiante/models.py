@@ -5,6 +5,7 @@ from django.db import models
 
 # Models
 from usuario.models import User
+from instituciones.models import Institucion
 
 # Create your models here.
 class Estudiante(models.Model):
@@ -12,6 +13,8 @@ class Estudiante(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    ni = models.BigIntegerField('numero_identificacion', unique=True,blank=True, null=True)
+    institucion = models.ForeignKey(Institucion, blank = True, null = True, on_delete=models.CASCADE)
     grado  = models.CharField('grado', max_length=10, null=False, blank=False)
     edad = models.IntegerField('edad', null=False, blank=False)
     barrio  = models.CharField('barrio', max_length=200, null=False, blank=False)

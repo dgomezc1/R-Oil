@@ -7,11 +7,9 @@ from instituciones.models import Institucion
 class User(AbstractUser):
     first_name = models.CharField('first name', max_length=150, blank=True, null=True)
     last_name = models.CharField('last name', max_length=150, blank=True, null=True)
-    email = models.EmailField('email address', blank=False, null=False)
-    institucion = models.ForeignKey(Institucion, blank = True, null = True, on_delete=models.CASCADE)
-    ni = models.BigIntegerField('numero_identificacion', unique=True,blank=True, null=True)
+    email = models.EmailField('email address', blank=False, null=False)    
     usuario_inst = models.BooleanField(default=False)
-    docente = models.BooleanField(default=False)
+    admin_docente = models.BooleanField(default=False)
     admin_proyecto = models.BooleanField(default=False)
 
     def get_institucion(self):
