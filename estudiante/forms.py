@@ -7,6 +7,7 @@ from django.forms.widgets import TextInput
 # Models
 from usuario.models import User
 from estudiante.models import Estudiante
+from docente.models import Docente
 
 class SignupForm(forms.Form):
     """Sign-up form."""
@@ -74,8 +75,7 @@ class SignupForm(forms.Form):
         ni = self.cleaned_data['ni']
         # Usamos filter porque si usamos get y no existe, lanzaría una excepción
         # exist() solo para saber si existe (booleano)
-        ni_taken = User.objects.filter(ni=ni).exists() 
-        if ni_taken:
+        if Estudiante.objects.filter(ni=ni).exists() or Docente.objects.filter(ni=ni).exists() :
             # Django se encarga de subir la excepción hasta el html
             raise forms.ValidationError('El número de identificación ya está en uso.')
         return ni # Es necesario que cuando se haga la validación de un campo, se regrese el campo
@@ -109,12 +109,13 @@ class SignupForm(forms.Form):
         # Le enviamos todo el formulario
 
         user = User.objects.create(**usuario)
+        print("Sin problemas")
         user.set_password(data['password'])
         user.save()
 
         estudiante = {
             'user': user,
-            'ni': data['ni'],
+            'ni': self.cleaned_data['ni'],
             'institucion': Institucion,
             'grado': data['grado'],
             'edad': data['edad'],
