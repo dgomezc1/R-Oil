@@ -24,10 +24,10 @@ class FormularioAceite(forms.Form):
         ni1 = self.cleaned_data['ni']
         if not User.objects.filter(username = nombre).exists():
             raise forms.ValidationError('Este usuario no existe')
-        elif not (User.objects.filter(username = nombre, ni=ni1).exists()):
-            raise forms.ValidationError('La identificacion no corresponde con el nombre')
         elif not (Estudiante.objects.filter(user = User.objects.get(username = nombre))):
             raise forms.ValidationError('Este usuario no es un estudiante')
+        elif not (Estudiante.objects.filter(user = User.objects.get(username = nombre), ni=ni1).exists()):
+            raise forms.ValidationError('La identificacion no corresponde con el nombre')        
         return nombre
 
     def crear_registro(self, estudiante):

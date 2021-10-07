@@ -1,10 +1,14 @@
 from django import forms
+from docente.models import Docente
+from estudiante.models import Estudiante
 from usuario.models import User
 from django.contrib.auth.models import Group
 
 class FormularioDocente(forms.ModelForm):
     ni = forms.IntegerField(label='numero identificacion',required=True,
     widget=forms.NumberInput(attrs={'placeholder':'Ingrese numero identificacion..'}))
+    telefono = forms.IntegerField(label='numero celular',required=True,
+    widget=forms.NumberInput(attrs={'placeholder':'Ingrese numero de celular..'}))
     password1 = forms.CharField(label='contraseña', widget=forms.PasswordInput(
         attrs={
             'class':'form-control',
@@ -54,19 +58,30 @@ class FormularioDocente(forms.ModelForm):
 
     def clean_ni(self):
         ni_usuario = self.cleaned_data["ni"]
-        if User.objects.filter(ni = ni_usuario).exists():
+        if Docente.objects.filter(ni = ni_usuario).exists() or Estudiante.objects.filter(ni = ni_usuario).exists():
             raise forms.ValidationError('El numero de identficacion no se encuentra disponible')
         return ni_usuario
+
+    def clean_telefono(self):
+        telefono = self.cleaned_data["telefono"]
+        if telefono<2999999999 or telefono>3999999999:
+            raise forms.ValidationError('El numero de celular no es valido')
+        return telefono
 
     def crear_usuario(self, institucion):
         grupo = Group.objects.get(name = "docentes")
         user = User.objects.create_user(self.cleaned_data['username'], self.cleaned_data['email']) 
         user.last_name = self.cleaned_data['last_name']
         user.first_name = self.cleaned_data['first_name']
-        user.ni = self.cleaned_data['ni']
-        user.institucion = institucion
-        user.docente = True
+        user.admin_docente = True
         user.groups.add(grupo)
         user.set_password(self.cleaned_data['password1'])
         user.save()
+        datos = {
+            'user': user,
+            'ni': self.cleaned_data['ni'],
+            'institucion': institucion,
+            'telefono': self.cleaned_data['telefono']
+        }
+        docente = Docente.objects.create(**datos)
 
