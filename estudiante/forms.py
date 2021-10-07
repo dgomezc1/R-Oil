@@ -20,9 +20,6 @@ class SignupForm(forms.Form):
     email = forms.CharField(required=True, widget=forms.EmailInput(
         attrs={'class': 'form-control', 'placeholder':'Ingrese su correo electronico...'})) 
 
-    ni = forms.IntegerField(required=True, widget=forms.NumberInput(
-        attrs={'class': 'form-control','placeholder':'Ingrese numero de identificacion...'}))
-
     username = forms.CharField(min_length=4, max_length=50, widget=TextInput(
         attrs={'class': 'form-control', 'placeholder':'Ingrese un nombre de usuario...'}))
 
@@ -32,6 +29,8 @@ class SignupForm(forms.Form):
         attrs={'class': 'form-control', 'placeholder':'Ingrese nuevamente la contraseña...'}))
 
     # Student data
+    ni = forms.IntegerField(required=True, widget=forms.NumberInput(
+        attrs={'class': 'form-control','placeholder':'Ingrese numero de identificacion...'}))
     grado = forms.CharField(max_length=10, required=True, widget=TextInput(
         attrs={'class': 'form-control', 'placeholder':'Ingrese el grado que se encuentra cursando...'}))
     edad = forms.IntegerField(required=True, widget=forms.NumberInput(
@@ -40,6 +39,7 @@ class SignupForm(forms.Form):
         attrs={'class': 'form-control', 'placeholder':'Ingrese el barrio de residencia...'}))
     telefono = forms.IntegerField(required=True, widget=forms.NumberInput(
         attrs={'class': 'form-control','placeholder':'Ingrese su numero de telefono...'}))
+    
 
     # Validación especifica
     def clean_username(self):
@@ -103,10 +103,8 @@ class SignupForm(forms.Form):
             'first_name': data['first_name'],
             'last_name': data['last_name'],
             'email': data['email'],
-            'ni': data['ni'],
             'usuario_inst': True,
             'username': data['username'],
-            'institucion': Institucion
         }
         # Le enviamos todo el formulario
 
@@ -116,6 +114,8 @@ class SignupForm(forms.Form):
 
         estudiante = {
             'user': user,
+            'ni': data['ni'],
+            'institucion': Institucion,
             'grado': data['grado'],
             'edad': data['edad'],
             'barrio': data['barrio'],
