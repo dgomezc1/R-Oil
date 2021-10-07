@@ -7,6 +7,7 @@ from django.forms.widgets import TextInput
 # Models
 from usuario.models import User
 from estudiante.models import Estudiante
+from docente.models import Docente
 
 class SignupForm(forms.Form):
     """Sign-up form."""
@@ -20,9 +21,6 @@ class SignupForm(forms.Form):
     email = forms.CharField(required=True, widget=forms.EmailInput(
         attrs={'class': 'form-control', 'placeholder':'Ingrese su correo electronico...'})) 
 
-    ni = forms.IntegerField(required=True, widget=forms.NumberInput(
-        attrs={'class': 'form-control','placeholder':'Ingrese numero de identificacion...'}))
-
     username = forms.CharField(min_length=4, max_length=50, widget=TextInput(
         attrs={'class': 'form-control', 'placeholder':'Ingrese un nombre de usuario...'}))
 
@@ -32,6 +30,8 @@ class SignupForm(forms.Form):
         attrs={'class': 'form-control', 'placeholder':'Ingrese nuevamente la contraseña...'}))
 
     # Student data
+    ni = forms.IntegerField(required=True, widget=forms.NumberInput(
+        attrs={'class': 'form-control','placeholder':'Ingrese numero de identificacion...'}))
     grado = forms.CharField(max_length=10, required=True, widget=TextInput(
         attrs={'class': 'form-control', 'placeholder':'Ingrese el grado que se encuentra cursando...'}))
     edad = forms.IntegerField(required=True, widget=forms.NumberInput(
@@ -40,6 +40,7 @@ class SignupForm(forms.Form):
         attrs={'class': 'form-control', 'placeholder':'Ingrese el barrio de residencia...'}))
     telefono = forms.IntegerField(required=True, widget=forms.NumberInput(
         attrs={'class': 'form-control','placeholder':'Ingrese su numero de telefono...'}))
+    
 
     # Validación especifica
     def clean_username(self):
@@ -74,8 +75,7 @@ class SignupForm(forms.Form):
         ni = self.cleaned_data['ni']
         # Usamos filter porque si usamos get y no existe, lanzaría una excepción
         # exist() solo para saber si existe (booleano)
-        ni_taken = User.objects.filter(ni=ni).exists() 
-        if ni_taken:
+        if Estudiante.objects.filter(ni=ni).exists() or Docente.objects.filter(ni=ni).exists() :
             # Django se encarga de subir la excepción hasta el html
             raise forms.ValidationError('El número de identificación ya está en uso.')
         return ni # Es necesario que cuando se haga la validación de un campo, se regrese el campo
@@ -103,19 +103,20 @@ class SignupForm(forms.Form):
             'first_name': data['first_name'],
             'last_name': data['last_name'],
             'email': data['email'],
-            'ni': data['ni'],
             'usuario_inst': True,
             'username': data['username'],
-            'institucion': Institucion
         }
         # Le enviamos todo el formulario
 
         user = User.objects.create(**usuario)
+        print("Sin problemas")
         user.set_password(data['password'])
         user.save()
 
         estudiante = {
             'user': user,
+            'ni': self.cleaned_data['ni'],
+            'institucion': Institucion,
             'grado': data['grado'],
             'edad': data['edad'],
             'barrio': data['barrio'],

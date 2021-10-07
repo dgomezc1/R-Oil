@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 # Forms
 from estudiante.forms import SignupForm, EstudianteForm
+from instituciones.models import Institucion
+from docente.models import Docente
 
 # Create your views here.
 @login_required
@@ -16,7 +18,8 @@ def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            institucion = request.user.institucion
+            docente = list(Docente.objects.filter(user=request.user))
+            institucion = docente[0].institucion
             form.save(institucion)
             return redirect('student_signup') 
     else: 
