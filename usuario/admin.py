@@ -17,7 +17,7 @@ class EstudianteAdmin(admin.ModelAdmin):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     """User admin."""
-    list_display = ('username', 'first_name', 'last_name', 'email', 'ni', 'institucion', 'usuario_inst', 'docente', 'admin_proyecto')
+    list_display = ('username', 'first_name', 'last_name', 'email','usuario_inst', 'docente', 'admin_proyecto')
 
 # Register your models here.
 @admin.register(Institucion)
