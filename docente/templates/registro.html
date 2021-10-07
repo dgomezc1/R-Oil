@@ -86,6 +86,19 @@
                     {% endif %}
                 </div>
                 <div class = "opciones">
+                    <label for="{{f.id_for_label}}">Numero de celular</label>
+                    <div class="form-warp">
+                        {{form.telefono}}
+                    </div>
+                    {% if form.telefono.errors %}
+                    <ul>
+                        {% for error in form.telefono.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
                     <label for="{{f.id_for_label}}">Contraseña</label>
                     <div class="form-warp">
                         {{form.password1}}
