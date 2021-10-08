@@ -30,12 +30,14 @@ class FormularioAceite(forms.Form):
             raise forms.ValidationError('La identificacion no corresponde con el nombre')        
         return nombre
 
-    def crear_registro(self, estudiante):
-        
+    def crear_registro(self, estudiante, institucion):
+        estudiante.aceite_recolectado = estudiante.aceite_recolectado + self.cleaned_data['cantidad_aceite']
+        estudiante.save()
         registro = {
             'estudiante': estudiante, 
             'cantidad_aceite': self.cleaned_data['cantidad_aceite'],
             'nombre': self.cleaned_data['nombre'],
+            'institucion': institucion,
         }
         registro1 = registro_aceite.objects.create(**registro)
 

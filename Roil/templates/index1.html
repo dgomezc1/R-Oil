@@ -23,6 +23,7 @@
 
 		<div class="sidebar-menu">
 			<ul>
+				{% if user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro docente' %}" class="{% if request.path == '/docentes/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
 					<span>Registro de docente</span></a>
@@ -31,6 +32,7 @@
 					<a href="{% url 'registro_institucion' %}" class="{% if request.path == '/institucion/registroinst/' %}active{% endif %}"><span class="las la-school"></span>
 					<span>Registro de institucion</span></a>
 				</li>
+				{% endif %}
 				<li>
 					<a href="{% url 'registro de aceite' %}" class="{% if request.path == '/aceite/registro/' %}active{% endif %}"><span class="las la-clipboard-list"></span>
 					<span>Registro de aceite</span></a>

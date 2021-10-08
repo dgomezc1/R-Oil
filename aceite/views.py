@@ -1,19 +1,14 @@
-import estudiante
-from aceite.models import registro_aceite
-from django.db.models.fields import mixins
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
 from .forms import FormularioAceite
-from django.views.generic.edit import CreateView
 from usuario.models import User
 from estudiante.models import Estudiante
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import registro_aceite
 from django.views import View
 from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 
-class registro_de_aceite2(permisos_estudiante_aceite, View):
+class registro_de_aceite2(LoginRequiredMixin, permisos_estudiante_aceite, View):
     form_class  = FormularioAceite()
     template_name = 'registro_Aceite.html'
 
@@ -28,7 +23,8 @@ class registro_de_aceite2(permisos_estudiante_aceite, View):
             estudiante = User.objects.get(username = nombre)
             print(estudiante)
             estudiante1=Estudiante.objects.get(user=estudiante)
-            form.crear_registro(estudiante1)
+            institucion = estudiante1.institucion
+            form.crear_registro(estudiante1, institucion)
             return HttpResponse("Envio correcto de datos")
 
         return render(request, self.template_name, {'form':form})
