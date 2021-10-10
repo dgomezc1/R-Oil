@@ -1,4 +1,5 @@
-import django
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import request
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
@@ -10,11 +11,16 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from usuario.mixins import permisos_estudiante_aceite
 
 # Create your views here.
-@login_required
-def home(request):
-    return render(request,'index1.html')
+
+class home(LoginRequiredMixin,permisos_estudiante_aceite, View):
+    template_name = 'index1.html'
+    def get(self, request, *args, **kwargs):
+        if request.user.admin_proyecto or request.user.admin_docente:           
+            return render(request, self.template_name)
+        return HttpResponse("Envio correcto de datos")
 
 class Login(FormView):
     template_name = 'index.html'
