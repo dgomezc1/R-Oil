@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'instituciones',
     'estudiante',
     'aceite',
+    'gestores',
 
     #copia de seguridad
     'dbbackup',

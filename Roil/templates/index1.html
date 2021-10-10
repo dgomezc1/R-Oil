@@ -23,6 +23,12 @@
 
 		<div class="sidebar-menu">
 			<ul>
+				{% if user.is_staff %}
+				<li>
+					<a href="{% url 'registro gestores' %}" class="{% if request.path == '/gestores/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
+					<span>Registro de Administradores</span></a>
+				</li>
+				{% endif %}
 				{% if user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro docente' %}" class="{% if request.path == '/docentes/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>

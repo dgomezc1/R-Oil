@@ -32,6 +32,7 @@ class FormularioAceite(forms.Form):
 
     def crear_registro(self, estudiante, institucion):
         estudiante.aceite_recolectado = estudiante.aceite_recolectado + self.cleaned_data['cantidad_aceite']
+        estudiante.puntos = estudiante.puntos + self.cleaned_data['cantidad_aceite']
         estudiante.save()
         registro = {
             'estudiante': estudiante, 
