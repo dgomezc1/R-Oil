@@ -23,4 +23,6 @@ def generate_mes():
 def generate_registro(estudiante, institucion, nombre):
     random_cantidad = generate_aceite()
     random_fecha = datetime(2020, generate_mes(), generate_dia())
-    registro_aceite.objects.create(estudiante=estudiante, cantidad_aceite = random_cantidad, nombre = nombre, institucion = institucion, fecha = random_fecha)
+    registro = registro_aceite.objects.create(estudiante=estudiante, cantidad_aceite = random_cantidad, nombre = nombre, institucion = institucion)
+    registro.fecha = random_fecha
+    registro.save()
