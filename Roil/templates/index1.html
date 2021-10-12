@@ -48,7 +48,7 @@
 					<span>Registro de estudiante</span></a>
 				</li>
 				<li>
-					<a href=""><span class="las la-money-check"></span>
+					<a href="{% url 'informe global' %}" class="{% if request.path == '/informes/global/' %}active{% endif %}"><span class="las la-money-check"></span>
 					<span>Informe</span></a>
 				</li>
 			</ul>
