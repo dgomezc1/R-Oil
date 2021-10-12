@@ -1,0 +1,63 @@
+{% extends "index1.html" %}
+{% load static %}
+{% block head_content %}
+    <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
+{% endblock %}
+
+{% block content %}
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <div>
+        <div class="titulo">
+            <h2>Informes locales</h2>
+        </div>
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+            <p class="highcharts-description">
+                Charts can be styled using CSS, allowing designers and
+                developers to more easily collaborate on chart configuration.
+                This example shows how the base Highcharts styling is imported
+                using CSS, and modified without the need for Javascript.
+            </p>
+        </figure>
+            
+    </div>
+    <script>Highcharts.chart('container', {
+
+        chart: {
+            type: 'column',
+            styledMode: true
+        },
+    
+        title: {
+            text: 'Styling axes and columns'
+        },
+    
+        yAxis: [{
+            className: 'highcharts-color-0',
+            title: {
+                text: 'Primary axis'
+            }
+        }, {
+            className: 'highcharts-color-1',
+            opposite: true,
+            title: {
+                text: 'Secondary axis'
+            }
+        }],
+    
+        plotOptions: {
+            column: {
+                borderRadius: 5
+            }
+        },
+    
+        series: [{
+            data: [1, 3, 2, 4]
+        }, {
+            data: [324, 124, 547, 221],
+            yAxis: 1
+        }]
+    
+    });</script>
+{% endblock %}
+
