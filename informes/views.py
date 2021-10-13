@@ -15,15 +15,27 @@ class informe(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get_data(valor):
+        cursor = connection.cursor()
+        if valor == "colum":
+            cursor.execute("SELECT strftime('%m',fecha) as fecha, institucion_id, SUM(cantidad_aceite) FROM aceite_registro_aceite GROUP BY institucion_id,strftime('%m',fecha) ORDER BY institucion_id")
+        elif valor == "pie":
+            cursor.execute("SELECT E.grado, SUM(A.cantidad_aceite) FROM estudiante_estudiante E JOIN aceite_registro_aceite A ON E.id = A.estudiante_id GROUP BY E.grado")
+        resultado = cursor.fetchall()
+        return resultado
+
     def post(self, request, *args, **kwargs):
         data={}
         try:
             action = request.POST['action']
-            if action == 'get_data':
-                cursor = connection.cursor()
-                cursor.execute("SELECT strftime('%m',fecha) as fecha, institucion_id, SUM(cantidad_aceite) FROM aceite_registro_aceite GROUP BY institucion_id,strftime('%m',fecha) ORDER BY institucion_id")
-                resultado = cursor.fetchall()
-                data = conversion(resultado)
+            if action == 'get_colum':   
+                data = conversion_colum(informe.get_data("colum"))
+            elif action == 'get_pie':
+                data ={
+                    'name': 'Porcentaje Aceite',
+                    'colorByPoint': True,
+                    'data':conversion_pie(informe.get_data("pie")),
+                } 
             else:
                 data['error']="Ha ocurrido un error"
         except Exception as e:
@@ -35,7 +47,18 @@ class informe(View):
         #cursor.execute("SELECT strftime('%m',fecha) as fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY strftime('%m',fecha)")
         return render(request, 'informes/informe_global.html')
 
-def conversion(resultado):
+def conversion_pie(resultado):
+    total = 0
+    for i in resultado:
+        total = total+i[1]
+    lista = []
+    for i in resultado:
+        porcentaje = (i[1]*100)/total
+        diccionario = {'name':i[0]+'°', 'y': porcentaje}
+        lista.append(diccionario)
+    return lista
+
+def conversion_colum(resultado):
     temp = (resultado[0])[1]
     lista = []
     lista_datos = []
