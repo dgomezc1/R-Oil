@@ -10,6 +10,9 @@
                 <h2>Registro de Aceite</h2>
             </div>
             <form action="" method="POST" class= "basic-grey">
+                {% if act %}
+                <p>{{error}}</p>
+                {% endif %}
                 {% csrf_token %}
                 <div class = "opciones">
                     <label for="{{form.nombre.id_for_label}}">Nombre del estudiante</label>

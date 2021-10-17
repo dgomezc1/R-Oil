@@ -1,19 +1,16 @@
-import estudiante
-from aceite.models import registro_aceite
-from django.db.models.fields import mixins
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
 from .forms import FormularioAceite
-from django.views.generic.edit import CreateView
 from usuario.models import User
 from estudiante.models import Estudiante
+from docente.models import Docente
+from gestores.models import Gestores
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import registro_aceite
 from django.views import View
 from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 
-class registro_de_aceite2(permisos_estudiante_aceite, View):
+class registro_de_aceite2(LoginRequiredMixin, permisos_estudiante_aceite, View):
     form_class  = FormularioAceite()
     template_name = 'registro_Aceite.html'
 
@@ -26,9 +23,20 @@ class registro_de_aceite2(permisos_estudiante_aceite, View):
         if form.is_valid():
             nombre= form.cleaned_data['username']
             estudiante = User.objects.get(username = nombre)
-            print(estudiante)
             estudiante1=Estudiante.objects.get(user=estudiante)
-            form.crear_registro(estudiante1)
-            return HttpResponse("Envio correcto de datos")
+            institucion = estudiante1.institucion
+            institucionD = None
+            if request.user.admin_docente:
+                docente = User.objects.get(username = request.user)
+                institucionD  =  (Docente.objects.get(user = docente)).institucion
+            else:
+                docente = User.objects.get(username = request.user)
+                institucionD  =  (Gestores.objects.get(user = docente)).institucion
+            if institucionD != institucion:
+                error = "El estudiante no corresponde a su institucion"
+                return render(request, self.template_name, {'form':form, 'error': error, 'act': True})
+            else:
+                form.crear_registro(estudiante1, institucion)
+                return HttpResponse("Envio correcto de datos")
 
         return render(request, self.template_name, {'form':form})

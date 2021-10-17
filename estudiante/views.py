@@ -1,6 +1,8 @@
 """Student views."""
 
 # Django
+from django.db.models.fields import NullBooleanField
+from django.forms.models import model_to_dict
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
@@ -10,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from estudiante.forms import SignupForm, EstudianteForm
 from instituciones.models import Institucion
 from docente.models import Docente
+from gestores.models import Gestores
+from usuario.models import User
 
 # Create your views here.
 @login_required
@@ -18,8 +22,13 @@ def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            docente = list(Docente.objects.filter(user=request.user))
-            institucion = docente[0].institucion
+            institucion = None
+            if request.user.admin_docente:
+                docente = User.objects.get(username = request.user)
+                institucion  =  (Docente.objects.get(user = docente)).institucion
+            else:
+                docente = User.objects.get(username = request.user)
+                institucion  =  (Gestores.objects.get(user = docente)).institucion
             form.save(institucion)
             return redirect('student_signup') 
     else: 
