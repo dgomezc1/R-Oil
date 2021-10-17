@@ -1,0 +1,93 @@
+{% extends "index1.html" %}
+{% load static %}
+
+{% block head_content %}
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+{% block content %}
+	<div id="container"></div>
+	<script type="application/javascript">
+		var graphcolum = Highcharts.chart('container', {
+		chart: {
+			type: 'column'
+		},
+		title: {
+			text: 'Informe de recoleccion mensual'
+		},
+		subtitle: {
+			text: 'Informacion de {{ institucion.nombre }}'
+		},
+		xAxis: {
+			categories: [
+				'Enero',
+				'Febrero',
+				'Marzo',
+				'Abril',
+				'Mayo',
+				'Junio',
+				'Julio',
+				'Agosto',
+				'Septiembre',
+				'Octubre',
+				'Noviembre',
+				'Diciembre'
+			],
+			crosshair: true
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: 'Aceite Recolectado (Litros)'
+			}
+		},
+		tooltip: {
+			headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				'<td style="padding:0"><b>{point.y:.1f} L </b></td></tr>',
+			footerFormat: '</table>',
+			shared: true,
+			useHTML: true
+		},
+		plotOptions: {
+			column: {
+				pointPadding: 0.2,
+				borderWidth: 0
+			}
+		},
+		series: [{
+			showInLegend: false,
+			
+		}]
+	});
+
+	function get_data(){
+		$.ajax({
+			url: window.location.pathname,	//url de petición
+			type: 'POST',					//tipo de peticion
+			data: {
+				'action': 'get_data'
+			},
+			dataType: 'json',
+		}).done(function (data){			
+			if(!data.hasOwnProperty('error')){
+				console.log(data);
+				data.forEach(element => graphcolum.addSeries(element));
+				
+				return false;
+			}
+			message_error(data.error);
+		}).fail(function (jqXHR, textStatus, errorThrown){
+			alert(textStatus+': '+errorThrown);
+		}).always(function (data){
+
+		});
+	}
+	$(function(){ // Ejecuta cuando inicia el template
+		get_data();
+	})
+	</script>
+{% endblock %}
