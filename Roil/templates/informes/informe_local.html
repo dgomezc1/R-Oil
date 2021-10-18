@@ -1,0 +1,159 @@
+{% extends "index1.html" %}
+{% load static %}
+
+{% block head_content %}
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+{% block content %}
+	<h1>{{ institucion.nombre }}</h1>
+	<div class="box">
+		<div class="box__name"></div>
+		<div class="box__estadistica"></div>
+	</div>
+	<div class="box">
+		<div class="box__name"></div>
+		<div class="box__estadistica"></div>
+	</div>
+	<div id="container"></div>
+	<div id="container-pie"></div>
+	<script type="application/javascript">
+		var graphcolum = Highcharts.chart('container', {
+		chart: {
+			type: 'column'
+		},
+		title: {
+			text: 'Informe de recoleccion mensual'
+		},
+		subtitle: {
+			text: 'Informacion de la institucion'
+		},
+		xAxis: {
+			categories: [
+				'Enero',
+				'Febrero',
+				'Marzo',
+				'Abril',
+				'Mayo',
+				'Junio',
+				'Julio',
+				'Agosto',
+				'Septiembre',
+				'Octubre',
+				'Noviembre',
+				'Diciembre'
+			],
+			crosshair: true
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: 'Aceite Recolectado (Litros)'
+			}
+		},
+		tooltip: {
+			headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				'<td style="padding:0"><b>{point.y:.1f} L </b></td></tr>',
+			footerFormat: '</table>',
+			shared: true,
+			useHTML: true
+		},
+		plotOptions: {
+			column: {
+				pointPadding: 0.2,
+				borderWidth: 0
+			}
+		},
+		series: [{
+			showInLegend: false,
+
+		}]
+	});
+
+	var graphpie = Highcharts.chart('container-pie', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+		},
+		title: {
+			text: 'Porcentaje de Aceite recolectado por grado'
+		},
+		tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		accessibility: {
+			point: {
+				valueSuffix: '%'
+			}
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: true,
+					format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+				}
+			}
+		},
+	});
+
+	function get_colum(){
+		$.ajax({
+			url: window.location.pathname,
+			type: 'POST',
+			data: {
+				'action': 'get_colum'
+			},
+			dataType: 'json',
+		}).done(function (data){			
+			if(!data.hasOwnProperty('error')){
+				console.log(data);
+				//data.forEach(element => graphcolum.addSeries(element));
+				graphcolum.addSeries(data)
+				
+				return false;
+			}
+			message_error(data.error);
+		}).fail(function (jqXHR, textStatus, errorThrown){
+			alert(textStatus+': '+errorThrown);
+		}).always(function (data){
+
+		});
+	}
+
+	function get_pie(){
+		$.ajax({
+			url: window.location.pathname,
+			type: 'POST',
+			data: {
+				'action': 'get_pie'
+			},
+			dataType: 'json',
+		}).done(function (data){			
+			if(!data.hasOwnProperty('error')){
+				console.log(data);
+				graphpie.addSeries(data);
+				
+				return false;
+			}
+			message_error(data.error);
+		}).fail(function (jqXHR, textStatus, errorThrown){
+			alert(textStatus+': '+errorThrown);
+		}).always(function (data){
+
+		});
+	}
+
+	$(function(){ // Ejecuta cuando inicia el template
+		get_colum();
+		get_pie();
+	})
+	</script>
+{% endblock %}

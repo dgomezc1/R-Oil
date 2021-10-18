@@ -1,8 +1,13 @@
 from django.urls import path
 from django.urls.conf import include
-from . import views
+from informes import views
 
 
 urlpatterns = [
-    path('global/', views.informe.as_view(), name="informe global"),
+    path('global/', views.informeGlobal.as_view(), name="informe global"),
+    path(
+        route='local/', 
+        view=views.informeLocal.as_view(),
+        name='informe_local'
+    )
 ]
