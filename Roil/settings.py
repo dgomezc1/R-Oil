@@ -72,8 +72,8 @@ ROOT_URLCONF = 'Roil.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['D:/Eafit/Integrador/proyecto/Roil/templates',
-        'D:/Eafit/Integrador/proyecto/docente/templates'],
+        'DIRS': [BASE_DIR / 'Roil/templates',
+        BASE_DIR / 'docente/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

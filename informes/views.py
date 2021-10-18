@@ -7,6 +7,8 @@ from django.views.generic.base import TemplateView
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from usuario.mixins import permisos_institucion_docentes
 
 # Models
 from instituciones.models import Institucion
@@ -15,7 +17,7 @@ from usuario.models import User
 from aceite.models import registro_aceite
 
 # Create your views here.
-class informeGlobal(View):
+class informeGlobal(LoginRequiredMixin,permisos_institucion_docentes,View):
     template_name = 'informes/informe_global.html'
 
     @method_decorator(csrf_exempt)
@@ -50,8 +52,6 @@ class informeGlobal(View):
         return JsonResponse(data, safe = False)
 
     def get(self, request, *args, **kwargs): 
-        #cursor.execute("SELECT fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY institucion_id")
-        #cursor.execute("SELECT strftime('%m',fecha) as fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY strftime('%m',fecha)")
         return render(request, 'informes/informe_global.html')
 
 class informeLocal(TemplateView):

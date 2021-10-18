@@ -16,7 +16,7 @@ from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 
 class home(LoginRequiredMixin,permisos_estudiante_aceite, View):
-    template_name = 'informes/informe_global.html'
+    template_name = 'index1.html'
     def get(self, request, *args, **kwargs):
         if request.user.admin_proyecto or request.user.admin_docente:           
             return render(request, self.template_name)
