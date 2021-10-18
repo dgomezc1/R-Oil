@@ -10,6 +10,7 @@
 {% endblock %}
 {% block content %}
 	<div id="container"></div>
+	<div id="container-pie"></div>
 	<script type="application/javascript">
 		var graphcolum = Highcharts.chart('container', {
 		chart: {
@@ -60,16 +61,46 @@
 		},
 		series: [{
 			showInLegend: false,
-			
+
 		}]
 	});
 
-	function get_data(){
+	var graphpie = Highcharts.chart('container-pie', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+		},
+		title: {
+			text: 'Porcentaje de Aceite recolectado por grado'
+		},
+		tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		accessibility: {
+			point: {
+				valueSuffix: '%'
+			}
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: true,
+					format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+				}
+			}
+		},
+	});
+
+	function get_colum(){
 		$.ajax({
-			url: window.location.pathname,	//url de petición
-			type: 'POST',					//tipo de peticion
+			url: window.location.pathname,
+			type: 'POST',
 			data: {
-				'action': 'get_data'
+				'action': 'get_colum'
 			},
 			dataType: 'json',
 		}).done(function (data){			
@@ -86,8 +117,33 @@
 
 		});
 	}
+
+	function get_pie(){
+		$.ajax({
+			url: window.location.pathname,
+			type: 'POST',
+			data: {
+				'action': 'get_pie'
+			},
+			dataType: 'json',
+		}).done(function (data){			
+			if(!data.hasOwnProperty('error')){
+				console.log(data);
+				graphpie.addSeries(data);
+				
+				return false;
+			}
+			message_error(data.error);
+		}).fail(function (jqXHR, textStatus, errorThrown){
+			alert(textStatus+': '+errorThrown);
+		}).always(function (data){
+
+		});
+	}
+
 	$(function(){ // Ejecuta cuando inicia el template
-		get_data();
+		get_colum();
+		get_pie();
 	})
 	</script>
 {% endblock %}

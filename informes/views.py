@@ -46,6 +46,7 @@ class informeGlobal(View):
                 data['error']="Ha ocurrido un error"
         except Exception as e:
             data['error']  = str(e)
+        return JsonResponse(data, safe = False)
 
     def get(self, request, *args, **kwargs): 
         #cursor.execute("SELECT fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY institucion_id")
@@ -69,7 +70,7 @@ class informeLocal(View):
         if valor == "colum":
             cursor.execute("SELECT strftime('%Y %m',fecha) as fecha, institucion_id, SUM(cantidad_aceite) FROM aceite_registro_aceite WHERE institucion_id=2 GROUP BY institucion_id,strftime('%m',fecha) ORDER BY institucion_id ")
         elif valor == "pie":
-            cursor.execute("SELECT E.grado, SUM(A.cantidad_aceite) FROM estudiante_estudiante E JOIN aceite_registro_aceite A ON E.id = A.estudiante_id WHERE institucion_id=2 GROUP BY E.grado")
+            cursor.execute("SELECT E.grado, SUM(A.cantidad_aceite) FROM estudiante_estudiante E JOIN aceite_registro_aceite A ON E.id = A.estudiante_id WHERE A.institucion_id=2 GROUP BY E.grado")
         resultado = cursor.fetchall()
         return resultado
 
@@ -81,12 +82,12 @@ class informeLocal(View):
             #institucion  =  (Docente.objects.get(user = docente)).institucion
             #resultado = registro_aceite.objects.filter(institucion_id = 2)
             if action == 'get_colum':
-                data = conversion_colum(informeGlobal.get_data("colum"))
+                data = conversion_colum(informeLocal.get_data("colum"))
             elif action == 'get_pie':
                 data ={
                     'name': 'Porcentaje Aceite',
                     'colorByPoint': True,
-                    'data':conversion_pie(informeGlobal.get_data("pie")),
+                    'data':conversion_pie(informeLocal.get_data("pie")),
                 } 
             else:
                 data['error']="Ha ocurrido un error"
