@@ -9,6 +9,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
 {% block content %}
+	<h1>{{ institucion.nombre }}</h1>
+	<div class="box">
+		<div class="box__name"></div>
+		<div class="box__estadistica"></div>
+	</div>
+	<div class="box">
+		<div class="box__name"></div>
+		<div class="box__estadistica"></div>
+	</div>
 	<div id="container"></div>
 	<div id="container-pie"></div>
 	<script type="application/javascript">
@@ -20,7 +29,7 @@
 			text: 'Informe de recoleccion mensual'
 		},
 		subtitle: {
-			text: 'Informacion de {{ institucion.nombre }}'
+			text: 'Informacion de la institucion'
 		},
 		xAxis: {
 			categories: [
@@ -106,7 +115,8 @@
 		}).done(function (data){			
 			if(!data.hasOwnProperty('error')){
 				console.log(data);
-				data.forEach(element => graphcolum.addSeries(element));
+				//data.forEach(element => graphcolum.addSeries(element));
+				graphcolum.addSeries(data)
 				
 				return false;
 			}

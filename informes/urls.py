@@ -8,6 +8,6 @@ urlpatterns = [
     path(
         route='local/', 
         view=views.informeLocal.as_view(),
-        name='informe local'
+        name='informe_local'
     )
 ]

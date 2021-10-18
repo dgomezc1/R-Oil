@@ -3,12 +3,13 @@ import django
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.views import View
+from django.views.generic.base import TemplateView
 from django.db import connection
-from instituciones.models import Institucion
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 # Models
+from instituciones.models import Institucion
 from docente.models import Docente
 from usuario.models import User
 from aceite.models import registro_aceite
@@ -53,13 +54,15 @@ class informeGlobal(View):
         #cursor.execute("SELECT strftime('%m',fecha) as fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY strftime('%m',fecha)")
         return render(request, 'informes/informe_global.html')
 
-class informeLocal(View):
+class informeLocal(TemplateView):
     template_name = 'informes/informe_local.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['institucion'] = Institucion.objects.get(pk=2)
-        return context
+    extra_context={'institucion': Institucion.objects.get(pk=2)}
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(informeLocal, self).get_context_data(*args,**kwargs)
+    #     context['institucion'] = Institucion.objects.get(pk=2)
+    #     return context
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -82,7 +85,12 @@ class informeLocal(View):
             #institucion  =  (Docente.objects.get(user = docente)).institucion
             #resultado = registro_aceite.objects.filter(institucion_id = 2)
             if action == 'get_colum':
-                data = conversion_colum(informeLocal.get_data("colum"))
+                data ={
+                    'name': 'Litros recolectados',
+                    'colorByPoint': True,
+                    'showInLegend': False,
+                    'data':conversion_columUnica(informeLocal.get_data("colum")),
+                } 
             elif action == 'get_pie':
                 data ={
                     'name': 'Porcentaje Aceite',
@@ -97,8 +105,6 @@ class informeLocal(View):
 
 
     def get(self, request, *args, **kwargs): 
-        #cursor.execute("SELECT fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY institucion_id")
-        #cursor.execute("SELECT strftime('%m',fecha) as fecha, cantidad_aceite, institucion_id FROM aceite_registro_aceite ORDER BY strftime('%m',fecha)")
         return render(request, 'informes/informe_local.html')
 
 #def conversion(resultado):
@@ -133,4 +139,14 @@ def conversion_colum(resultado):
     diccionario['data'] = lista_datos
     lista.append(diccionario)
     return lista
+
+def conversion_columUnica(resultado):
+    temp = (resultado[0])[1]
+    lista = []
+    lista_datos = []
+    nombre = Institucion.objects.get(pk=(resultado[0])[1])
+    
+    for i in range(len(resultado)):
+            lista.append((resultado[i])[2])
+    return lista   
 
