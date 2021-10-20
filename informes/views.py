@@ -109,7 +109,7 @@ class informeLocal(LoginRequiredMixin,permisos_estudiante_aceite,View):
 
 
     def get(self, request, *args, **kwargs): 
-        return render(request, 'informes/informe_local.html')
+        return render(request, 'informes/informe_local.html',{'institucion': Institucion.objects.get(pk=2)})
 
 #def conversion(resultado):
 def conversion_pie(resultado):

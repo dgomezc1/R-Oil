@@ -5,6 +5,7 @@ import estudiante
 from usuario.models import User
 from .models import registro_aceite
 from estudiante.models import Estudiante
+from instituciones.models import Institucion
 
 class FormularioAceite(forms.Form):
     ni = forms.IntegerField(label='numero identificacion',required=True,
@@ -34,6 +35,8 @@ class FormularioAceite(forms.Form):
         estudiante.aceite_recolectado = estudiante.aceite_recolectado + self.cleaned_data['cantidad_aceite']
         estudiante.puntos = estudiante.puntos + self.cleaned_data['cantidad_aceite']
         estudiante.save()
+        institucion.aceite_recolectado = institucion.aceite_recolectado + self.cleaned_data['cantidad_aceite']
+        institucion.save()
         registro = {
             'estudiante': estudiante, 
             'cantidad_aceite': self.cleaned_data['cantidad_aceite'],

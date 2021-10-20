@@ -8,6 +8,7 @@ class Institucion(models.Model):
     sede = models.CharField(max_length=150, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    aceite_recolectado = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = 'Institucion'

@@ -15,7 +15,7 @@ class Estudiante(models.Model):
 
     ni = models.BigIntegerField('numero_identificacion', unique=True,blank=True, null=True)
     institucion = models.ForeignKey(Institucion, blank = True, null = True, on_delete=models.CASCADE)
-    grado  = models.CharField('grado', max_length=10, null=False, blank=False)
+    grado  = models.IntegerField('grado', null=False, blank=False)
     edad = models.IntegerField('edad', null=False, blank=False)
     barrio  = models.CharField('barrio', max_length=200, null=False, blank=False)
     telefono = models.IntegerField('telefono', null=False, blank=False)
