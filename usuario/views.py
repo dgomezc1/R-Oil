@@ -15,12 +15,18 @@ from usuario.mixins import permisos_estudiante_aceite
 
 # Create your views here.
 
-class home(LoginRequiredMixin,permisos_estudiante_aceite, View):
+class home(LoginRequiredMixin,View):
     template_name = 'index1.html'
+    redirect_field_name = 'estudiante'
     def get(self, request, *args, **kwargs):
         if request.user.admin_proyecto or request.user.admin_docente:           
             return render(request, self.template_name)
-        return HttpResponse("Envio correcto de datos")
+        else:
+            return HttpResponseRedirect(self.get_redirect_field_name())
+
+class home_estudiante(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("Hola estudiante")
 
 class Login(FormView):
     template_name = 'index.html'

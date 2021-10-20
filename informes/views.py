@@ -8,7 +8,7 @@ from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
-from usuario.mixins import permisos_institucion_docentes
+from usuario.mixins import permisos_institucion_docentes, permisos_estudiante_aceite
 
 # Models
 from instituciones.models import Institucion
@@ -30,6 +30,8 @@ class informeGlobal(LoginRequiredMixin,permisos_institucion_docentes,View):
             cursor.execute("SELECT strftime('%m',fecha) as fecha, institucion_id, SUM(cantidad_aceite) FROM aceite_registro_aceite GROUP BY institucion_id,strftime('%m',fecha) ORDER BY institucion_id")
         elif valor == "pie":
             cursor.execute("SELECT E.grado, SUM(A.cantidad_aceite) FROM estudiante_estudiante E JOIN aceite_registro_aceite A ON E.id = A.estudiante_id GROUP BY E.grado")
+        elif valor == "line":
+            cursor.execute("SELECT strftime('%m', fecha) as mes, strftime('%Y', fecha) as ano, SUM(cantidad_aceite) FROM aceite_registro_aceite GROUP BY strftime('%m',fecha),strftime('%Y',fecha)")
         resultado = cursor.fetchall()
         return resultado
 
@@ -45,6 +47,8 @@ class informeGlobal(LoginRequiredMixin,permisos_institucion_docentes,View):
                     'colorByPoint': True,
                     'data':conversion_pie(informeGlobal.get_data("pie")),
                 } 
+            elif action == 'get_line':
+                data = conversion_line(informeGlobal.get_data("line"))
             else:
                 data['error']="Ha ocurrido un error"
         except Exception as e:
@@ -54,7 +58,7 @@ class informeGlobal(LoginRequiredMixin,permisos_institucion_docentes,View):
     def get(self, request, *args, **kwargs): 
         return render(request, 'informes/informe_global.html')
 
-class informeLocal(TemplateView):
+class informeLocal(LoginRequiredMixin,permisos_estudiante_aceite,View):
     template_name = 'informes/informe_local.html'
 
     extra_context={'institucion': Institucion.objects.get(pk=2)}
@@ -150,3 +154,22 @@ def conversion_columUnica(resultado):
             lista.append((resultado[i])[2])
     return lista   
 
+def conversion_line(resultado):
+    temp = (resultado[0])[1]
+    lista = []
+    lista_datos = []
+    nombre = temp
+    diccionario = {'name': nombre}
+    for i in range(len(resultado)):
+        if (resultado[i])[1] == temp:
+            lista_datos.append((resultado[i])[2])
+        else:
+            diccionario['data'] = lista_datos
+            lista.append(diccionario)
+            lista_datos = []
+            diccionario = {}
+            temp = (resultado[i])[1]
+            diccionario['name'] = temp
+    diccionario['data'] = lista_datos
+    lista.append(diccionario)
+    return lista

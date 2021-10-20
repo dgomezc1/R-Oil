@@ -10,8 +10,9 @@
     </head>
 	<div id="container"></div>
 	<div id="container-pie"></div>
+	<div id = "container-line"></div>
 	<script type="application/javascript">
-		var graphcolum = Highcharts.chart('container', {
+	var graphcolum = Highcharts.chart('container', {
 		chart: {
 			type: 'column'
 		},
@@ -90,6 +91,57 @@
 		},
 	});
 
+	var graphline = Highcharts.chart('container-line', {
+    title: {
+        text: 'Recoleccion mensual total'
+    },
+    xAxis: {
+		categories: [
+				'Enero',
+				'Febrero',
+				'Marzo',
+				'Abril',
+				'Mayo',
+				'Junio',
+				'Julio',
+				'Agosto',
+				'Septiembre',
+				'Octubre',
+				'Noviembre',
+				'Diciembre'
+			],
+			crosshair: true
+    },
+    yAxis: {
+        title: {
+            text: 'Cantidad de aceite recolectada (L)'
+        },
+    },
+	legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    tooltip: {
+        pointFormat: ' Aceite total recolectado <b>{point.y:,.0f}</b><br/> Litros'
+    },
+	responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+});
+
 	function get_colum(){
 		$.ajax({
 			url: window.location.pathname,
@@ -136,9 +188,33 @@
 		});
 	}
 
+	function get_line(){
+		$.ajax({
+			url: window.location.pathname,
+			type: 'POST',
+			data: {
+				'action': 'get_line'
+			},
+			dataType: 'json',
+		}).done(function (data){			
+			if(!data.hasOwnProperty('error')){
+				console.log(data);
+				data.forEach(element => graphline.addSeries(element));
+				
+				return false;
+			}
+			message_error(data.error);
+		}).fail(function (jqXHR, textStatus, errorThrown){
+			alert(textStatus+': '+errorThrown);
+		}).always(function (data){
+
+		});
+	}
+
 	$(function(){
 		get_colum();
 		get_pie();
+		get_line();
 	})
 	</script>
 {% endblock %}
