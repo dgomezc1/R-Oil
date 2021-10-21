@@ -26,7 +26,7 @@ class home(LoginRequiredMixin,View):
 
 class home_estudiante(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Hola estudiante")
+        return render(request,"home_estudiante.html" )
 
 class Login(FormView):
     template_name = 'index.html'
