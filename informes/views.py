@@ -8,6 +8,8 @@ from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+# Mixins
 from usuario.mixins import permisos_institucion_docentes, permisos_estudiante_aceite
 
 # Models
