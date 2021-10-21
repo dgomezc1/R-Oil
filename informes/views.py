@@ -117,9 +117,13 @@ def conversion_pie(resultado):
     for i in resultado:
         total = total+i[1]
     lista = []
-    for i in resultado:
-        porcentaje = (i[1]*100)/total
-        diccionario = {'name':i[0]+'°', 'y': porcentaje}
+    for j in range(len(resultado)):
+        print(j)
+        porcentaje = ((resultado[j])[1]*100)/total
+        nombre = (resultado[j])[0]
+        nombre = str(nombre) + '°'
+        diccionario = {'name':nombre, 'y': porcentaje}
+        print(porcentaje)
         lista.append(diccionario)
     return lista
 
