@@ -11,15 +11,26 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from usuario.mixins import permisos_estudiante_aceite
+from instituciones.models import Institucion
+from django.contrib import messages
 
 # Create your views here.
 
 class home(LoginRequiredMixin,View):
-    template_name = 'index1.html'
+    template_name = 'home_docentes.html'
     redirect_field_name = 'estudiante'
     def get(self, request, *args, **kwargs):
-        if request.user.admin_proyecto or request.user.admin_docente:           
+        if request.user.admin_proyecto or request.user.admin_docente:
+            if request.user.admin_proyecto:
+                insituciones = Institucion.objects.all()
+                mensaje = False
+                texto = ""
+                for i in range(len(insituciones)):
+                    if insituciones[i].aceite_recolectado > 100:
+                        mensaje = True
+                        texto = texto + "* "+insituciones[i].nombre+", "
+                if mensaje:
+                    messages.info(request, texto)          
             return render(request, self.template_name)
         else:
             return HttpResponseRedirect(self.get_redirect_field_name())
