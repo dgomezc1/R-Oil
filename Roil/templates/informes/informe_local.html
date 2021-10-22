@@ -7,16 +7,21 @@
 	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/informe.css' %}"> -->
 {% endblock %}
 {% block content %}
 	<h1>{{ institucion.nombre }}</h1>
-	<div class="box">
-		<div class="box__name"></div>
-		<div class="box__estadistica"></div>
-	</div>
-	<div class="box">
-		<div class="box__name"></div>
-		<div class="box__estadistica"></div>
+	<div class="data-bar">
+
+		<div class="box">
+			<div class="box__name"><span>No. de estudiantes</span></div>
+			<div class="box__estadistica">{{ no_estudiantes }}</div>
+		</div><!--
+	--><div class="box">
+			<div class="box__name">Aceite total recolectado</div>
+			<div class="box__estadistica">{{ aceite }}</div>
+		</div>
+
 	</div>
 	<div id="container"></div>
 	<div id="container-pie"></div>

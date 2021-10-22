@@ -1,9 +1,9 @@
 # Django
 import django
+from django.db.models.aggregates import Count, Sum
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.views import View
-from django.views.generic.base import TemplateView
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -16,7 +16,10 @@ from usuario.mixins import permisos_institucion_docentes, permisos_estudiante_ac
 from instituciones.models import Institucion
 from docente.models import Docente
 from usuario.models import User
+from gestores.models import Gestores
 from aceite.models import registro_aceite
+from estudiante.models import Estudiante
+
 
 # Create your views here.
 class informeGlobal(LoginRequiredMixin,permisos_institucion_docentes,View):
@@ -58,12 +61,22 @@ class informeGlobal(LoginRequiredMixin,permisos_institucion_docentes,View):
         return JsonResponse(data, safe = False)
 
     def get(self, request, *args, **kwargs): 
-        return render(request, 'informes/informe_global.html')
+        litros_recolectados = registro_aceite.objects.all().aggregate(Sum('cantidad_aceite'))
+        cantidad_estudiantes = Estudiante.objects.all().aggregate(Count('pk'))
+        #top_institucion en recolecion
+        #top estudiante en recoleccion
+
+        return render(
+            request=request, 
+            template_name='informes/informe_global.html', 
+            context={'litros_totales': litros_recolectados['cantidad_aceite__sum'], 'no_estudiantes': cantidad_estudiantes['pk__count']})
 
 class informeLocal(LoginRequiredMixin,permisos_estudiante_aceite,View):
     template_name = 'informes/informe_local.html'
 
     extra_context={'institucion': Institucion.objects.get(pk=2)}
+
+    institucion = None
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super(informeLocal, self).get_context_data(*args,**kwargs)
@@ -74,12 +87,22 @@ class informeLocal(LoginRequiredMixin,permisos_estudiante_aceite,View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get_data(valor):
+    def get_data(request, valor):
+        usuario = User.objects.get(username=request.user)
+        if (request.user.admin_proyecto):
+            docente = Gestores.objects.get(user = usuario)
+        else:
+            docente =  Docente.objects.get(user = usuario)
+        id = docente.institucion.pk
+        institucion = docente.institucion
+        print(" s ", id)
         cursor = connection.cursor()
         if valor == "colum":
-            cursor.execute("SELECT strftime('%Y %m',fecha) as fecha, institucion_id, SUM(cantidad_aceite) FROM aceite_registro_aceite WHERE institucion_id=2 GROUP BY institucion_id,strftime('%m',fecha) ORDER BY institucion_id ")
+            var = "SELECT strftime('%Y %m',fecha) as fecha, institucion_id, SUM(cantidad_aceite) FROM aceite_registro_aceite WHERE institucion_id="+str(id)+" GROUP BY institucion_id,strftime('%m',fecha) ORDER BY institucion_id "
+            cursor.execute(var)
         elif valor == "pie":
-            cursor.execute("SELECT E.grado, SUM(A.cantidad_aceite) FROM estudiante_estudiante E JOIN aceite_registro_aceite A ON E.id = A.estudiante_id WHERE A.institucion_id=2 GROUP BY E.grado")
+            var = "SELECT E.grado, SUM(A.cantidad_aceite) FROM estudiante_estudiante E JOIN aceite_registro_aceite A ON E.id = A.estudiante_id WHERE A.institucion_id="+str(id)+" GROUP BY E.grado"
+            cursor.execute(var)
         resultado = cursor.fetchall()
         return resultado
 
@@ -87,21 +110,18 @@ class informeLocal(LoginRequiredMixin,permisos_estudiante_aceite,View):
         data={}
         try:
             action = request.POST['action']
-            #docente = User.objects.get(username = request.user)
-            #institucion  =  (Docente.objects.get(user = docente)).institucion
-            #resultado = registro_aceite.objects.filter(institucion_id = 2)
             if action == 'get_colum':
                 data ={
                     'name': 'Litros recolectados',
                     'colorByPoint': True,
                     'showInLegend': False,
-                    'data':conversion_columUnica(informeLocal.get_data("colum")),
+                    'data':conversion_columUnica(informeLocal.get_data(request, "colum")),
                 } 
             elif action == 'get_pie':
                 data ={
                     'name': 'Porcentaje Aceite',
                     'colorByPoint': True,
-                    'data':conversion_pie(informeLocal.get_data("pie")),
+                    'data':conversion_pie(informeLocal.get_data(request, "pie")),
                 } 
             else:
                 data['error']="Ha ocurrido un error"
@@ -111,7 +131,24 @@ class informeLocal(LoginRequiredMixin,permisos_estudiante_aceite,View):
 
 
     def get(self, request, *args, **kwargs): 
-        return render(request, 'informes/informe_local.html',{'institucion': Institucion.objects.get(pk=2)})
+        usuario = User.objects.get(username=request.user)
+        if (request.user.admin_proyecto):
+            docente = Gestores.objects.get(user = usuario)
+        else:
+            docente =  Docente.objects.get(user = usuario)
+        institucion = docente.institucion
+        aceiteTot = registro_aceite.objects.filter(institucion_id__exact=institucion.pk).aggregate(Count('institucion_id'))
+        print(type(aceiteTot))
+        #top estudiante en recoleccion
+        cursor = connection.cursor()
+        var = "SELECT COUNT(*) FROM estudiante_estudiante WHERE institucion_id = "+str(institucion.pk)
+        cursor.execute(var)
+        no_estudiantes = cursor.fetchall()[0][0]
+        print(type(no_estudiantes))
+        return render(
+            request=request, 
+            template_name='informes/informe_local.html',
+            context={'institucion': institucion, 'aceite': aceiteTot['institucion_id__count'], 'no_estudiantes': no_estudiantes})
 
 #def conversion(resultado):
 def conversion_pie(resultado):

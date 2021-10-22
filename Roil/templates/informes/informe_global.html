@@ -8,6 +8,18 @@
 		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
+	<div class="data-bar">
+
+		<div class="box">
+			<div class="box__name"><span>No. de estudiantes</span></div>
+			<div class="box__estadistica">{{ no_estudiantes }}</div>
+		</div><!--
+	--><div class="box">
+			<div class="box__name">Aceite total recolectado</div>
+			<div class="box__estadistica">{{ litros_totales }}</div>
+		</div>
+
+	</div>
 	<div id="container"></div>
 	<div id="container-pie"></div>
 	<div id = "container-line"></div>
