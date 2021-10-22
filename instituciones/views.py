@@ -1,10 +1,17 @@
+# Django
 from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Institucion
-from .forms import FormularioInstitucion
-from usuario.mixins import permisos_institucion_docentes
 from django.core import management
+
+# Models
+from instituciones.models import Institucion
+
+# Forms
+from instituciones.forms import FormularioInstitucion
+
+# Mixins
+from usuario.mixins import permisos_institucion_docentes
 
 # Create your views here.
 

@@ -27,7 +27,7 @@
 				{% if user.is_staff %}
 				<li>
 					<a href="{% url 'registro gestores' %}" class="{% if request.path == '/gestores/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
-					<span>Registro de Administradores</span></a>
+					<span>Registro de Admin</span></a>
 				</li>
 				{% endif %}
 				{% if user.admin_proyecto %}
@@ -55,7 +55,7 @@
 			</ul>
 		</div>
 	</div>
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<div class="main-content">
 		<header>
 			<h2>

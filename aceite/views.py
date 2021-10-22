@@ -1,12 +1,20 @@
+
+# Django
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
-from .forms import FormularioAceite
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+
+# Models
 from usuario.models import User
 from estudiante.models import Estudiante
 from docente.models import Docente
 from gestores.models import Gestores
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
+
+# Forms
+from aceite.forms import FormularioAceite
+
+# Mixins
 from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 

@@ -1,12 +1,19 @@
+# Django
 from django.http import request
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
-from .forms import FormularioAdmin
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+# Models
 from usuario.models import User
 from instituciones.models import Institucion
-from django.contrib.auth.mixins import LoginRequiredMixin
+
+# Forms
+from .forms import FormularioAdmin
+
+# Mixins
 from usuario.mixins import permisos_registro_admin
 
 # Create your views here.
