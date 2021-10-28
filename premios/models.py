@@ -16,6 +16,12 @@ class Premio(models.Model):
     cantidad  = models.IntegerField('cantidad', null=False, blank=False)
     precio = models.BigIntegerField('precio', null=False, blank=False)
 
+    imagen = models.ImageField(
+        upload_to='premios/pictures',
+        null=True,
+        blank=True
+    )
+
     institucion_id = models.ForeignKey(Institucion, on_delete=models.CASCADE)
 
     entregados = models.ManyToManyField(Estudiante, through='PremiosEntregados')
