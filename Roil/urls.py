@@ -19,7 +19,10 @@ from django.urls import path
 from django.urls.conf import include
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.conf.urls.static import static
 
+# Views
 from usuario.views import Login, logoutUsuario
 from estudiante import views as estudiante_views
 
@@ -35,5 +38,5 @@ urlpatterns = [
     path('aceite/', include('aceite.urls')),
     path('gestores/', include('gestores.urls')),
     path('informes/', include('informes.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
