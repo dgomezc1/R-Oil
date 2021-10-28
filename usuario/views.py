@@ -2,7 +2,6 @@
 # Django
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import request
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import FormView
@@ -11,7 +10,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Forms

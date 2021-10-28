@@ -1,9 +1,10 @@
 
 # Django
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.contrib import messages
 
 # Models
 from usuario.models import User
@@ -45,6 +46,7 @@ class registro_de_aceite2(LoginRequiredMixin, permisos_estudiante_aceite, View):
                 return render(request, self.template_name, {'form':form, 'error': error, 'act': True})
             else:
                 form.crear_registro(estudiante1, institucion)
-                return HttpResponse("Envio correcto de datos")
+                messages.success(request, "Registro de aceite exitoso")
+                return render(request, self.template_name, {'form':FormularioAceite})
 
         return render(request, self.template_name, {'form':form})
