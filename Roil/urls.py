@@ -38,5 +38,7 @@ urlpatterns = [
     path('aceite/', include('aceite.urls')),
     path('gestores/', include('gestores.urls')),
     path('informes/', include('informes.urls')),
+    path('premios/', include(('premios.urls', 'premios'), namespace='premios')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
