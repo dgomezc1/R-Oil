@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'aceite',
     'gestores',
     'informes',
+    'premios',
 
     #copia de seguridad
     'dbbackup',
