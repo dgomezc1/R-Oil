@@ -10,7 +10,7 @@
             <div class="titulo">
                 <h2>Registro de Estudiante</h2>
             </div>
-            <form action="{% url 'student_signup' %}" method="POST" class="basic-grey">
+            <form action="{% url 'registro de estudiante' %}" method="POST" class="basic-grey">
                 {% csrf_token %}
                 <div class = "opciones">
                     <label for="{{form.first_name.id_for_label}}">Nombre del estudiante</label>
@@ -161,5 +161,15 @@
             </form>
 
         </div>
+        {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    "title": "{{m}}",
+                    "icon":"success"
+                })
+            </script>
+        {% endfor %}
+        {% endif %}
 {% endblock %}
 

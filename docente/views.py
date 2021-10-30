@@ -1,12 +1,10 @@
 
 # Django
-from django.db.models.fields import mixins
-from django.http import request
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
-from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 # Models
 from usuario.models import User
@@ -36,6 +34,7 @@ class registro2(LoginRequiredMixin,permisos_institucion_docentes,CreateView):
         if form.is_valid():
             institucion = Institucion.objects.get(nombre= request.POST.get("state"))
             form.crear_usuario(institucion)
-            return HttpResponse("Envio correcto de datos")
+            messages.success(request, "Registro de docente exitoso")
+            return render(request, self.template_name, {'form':FormularioDocente, 'lista': op_institucion})
         else:
             return render(request, self.template_name, {'form':form, 'lista': op_institucion})
