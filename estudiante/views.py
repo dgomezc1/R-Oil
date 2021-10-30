@@ -1,12 +1,11 @@
 """Student views."""
 
 # Django
-from django.db.models.fields import NullBooleanField
-from django.forms.models import model_to_dict
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-
-
+from django.views import View
+from django.contrib import messages
 
 # Forms
 from estudiante.forms import SignupForm, EstudianteForm
@@ -43,3 +42,26 @@ def signup_view(request):
             'form': form
         }
     )
+
+class registro_estudiante(LoginRequiredMixin, View):
+    form_class = SignupForm()
+    template_name = 'estudiante/signup.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        return render(request, self.template_name,{'form':form})
+
+    def post(self, request, *args, **kwargs):
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            institucion = None
+            if request.user.admin_docente:
+                docente = User.objects.get(username = request.user)
+                institucion  =  (Docente.objects.get(user = docente)).institucion
+            else:
+                docente = User.objects.get(username = request.user)
+                institucion  =  (Gestores.objects.get(user = docente)).institucion
+            form.save(institucion)
+            messages.success(request, "Registro de estudiante exitoso")
+            return render(request, self.template_name, {'form':self.form_class})
+        return render(request, self.template_name,{'form':form})
