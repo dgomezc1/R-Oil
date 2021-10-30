@@ -8,7 +8,7 @@ from django.views import View
 from django.contrib import messages
 
 # Forms
-from estudiante.forms import SignupForm, EstudianteForm
+from estudiante.forms import SignupForm
 
 #Models
 from instituciones.models import Institucion
@@ -16,34 +16,11 @@ from docente.models import Docente
 from gestores.models import Gestores
 from usuario.models import User
 
+# Mixins
+from usuario.mixins import permisos_estudiante_aceite
+
 # Create your views here.
-@login_required
-def signup_view(request):
-    """Sign up user view."""
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            institucion = None
-            if request.user.admin_docente:
-                docente = User.objects.get(username = request.user)
-                institucion  =  (Docente.objects.get(user = docente)).institucion
-            else:
-                docente = User.objects.get(username = request.user)
-                institucion  =  (Gestores.objects.get(user = docente)).institucion
-            form.save(institucion)
-            return redirect('student_signup') 
-    else: 
-        form = SignupForm()
-
-    return render(
-        request=request, 
-        template_name='estudiante/signup.html',
-        context={
-            'form': form
-        }
-    )
-
-class registro_estudiante(LoginRequiredMixin, View):
+class registro_estudiante(LoginRequiredMixin, permisos_estudiante_aceite,View):
     form_class = SignupForm()
     template_name = 'estudiante/signup.html'
 
