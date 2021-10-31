@@ -26,6 +26,7 @@ class FormularioPremio(forms.Form):
             'descripcion': data['descripcion'],
             'cantidad': data['cantidad'],
             'precio': data['precio'],
+            'imagen': data['imagen'],
             'institucion_id': institucion
         }
         premio = Premio.objects.create(**datos)
