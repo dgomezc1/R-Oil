@@ -58,13 +58,16 @@
     width:100%;
 }
 
-.card_autores{
+.card_stock{
+    position: absolute;
+    top: 50%;
+    left: 68%;
     font-size:12px;
     color:rgb(65, 65, 65);
     padding:8px 0px;
 }
 
-.card_autores:hover{
+.card_stock:hover{
     color:#2378e0;
 }
   
