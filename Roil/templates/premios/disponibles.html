@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,14 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disponibles</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
 </head>
 <body>
-    <h1>Premios disponibles:</h1>
-    {% for premio in object_list %}
-        <h3>{{ premio.nombre }}</h3>
-        <img src="{{ premio.imagen.url }}" alt="" height="300">
-        <p>Puntos: {{ premio.precio }}</p>
+    <div class ="contenedor-carrousel">
+        <h1>Premios disponibles:</h1>
+        <div class="cards">
+            
+            {% for premio in object_list %}
+                <div class="card">
+                    <div class="card-overlay">
+                        <div class="heading"><a class="button" href="">Reclamar</a></div>
+                    </div>
+                    <div class="card_content">
+                        <div class="card_title">{{ premio.nombre }}</div>
+                        <div class="card_autores"></div>
+                        <div class="card_precio">Puntos: {{ premio.precio }}</div>
+                    </div>
+                    <h3></h3>
+                    <img class="card-poster" src="{{ premio.imagen.url }}">
+                    <p></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
-    {% endfor %}
 </body>
 </html>
