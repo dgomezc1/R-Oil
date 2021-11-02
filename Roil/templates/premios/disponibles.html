@@ -16,7 +16,7 @@
             {% for premio in object_list %}
                 <div class="card">
                     <div class="card-overlay">
-                        <div class="heading"><a class="button" href="">Reclamar</a></div>
+                        <div class="heading"><input type = "submit" class="button" value="Reclamar" id={{premio.id}}></div>
                     </div>
                     <div class="card_content">
                         <div class="card_title">{{ premio.nombre }}</div>
