@@ -19,6 +19,7 @@ from django.urls import path
 from django.urls.conf import include
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import logout_then_login
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -30,7 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('usuario.urls')),
     path('accounts/login/', Login.as_view(), name = "login"),
-    path('logout/', login_required(logoutUsuario), name="logout"),
+    path('logout/', logout_then_login, name="logout"),
 
     path('estudiantes/', include('estudiante.urls')),
     path('docentes/', include('docente.urls')),
