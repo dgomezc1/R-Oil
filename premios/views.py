@@ -49,3 +49,6 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         #print(context)
         return context
+
+    def post(self, request, *args, **kwargs):
+        print()
