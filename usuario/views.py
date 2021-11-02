@@ -43,7 +43,7 @@ class home_estudiante(View):
         return HttpResponse("Hola estudiante")
 
 class Login(FormView):
-    template_name = 'index.html'
+    template_name = 'login.html'
     form_class = FormularioLogin
     success_url = reverse_lazy('home')
  

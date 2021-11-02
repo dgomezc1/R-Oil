@@ -2,12 +2,14 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponse
 from django.views import View
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Models
 from usuario.models import User
 from docente.models import Docente
 from gestores.models import Gestores
+from premios.models import Premio
 
 # Forms
 from premios.forms import FormularioPremio
@@ -38,3 +40,12 @@ class registroPremios(LoginRequiredMixin,permisos_estudiante_aceite, View):
             form.save(institucion)
         else:
             return render(request, self.template_name, {'form':form})
+
+class premiosDisponibles(ListView, LoginRequiredMixin):
+    model = Premio
+    template_name = 'premios/disponibles.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #print(context)
+        return context
