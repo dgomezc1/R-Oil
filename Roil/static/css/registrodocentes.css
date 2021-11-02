@@ -29,6 +29,10 @@
     padding: 10px ;
 }
 
+.boton{
+    padding: 30px ;
+}
+
 input[type="submit"]{
     width: 30%;
     height: 40px;

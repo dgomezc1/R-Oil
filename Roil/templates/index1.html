@@ -19,13 +19,11 @@
 
 		<div class="sidebar-menu">
 			<ul>
-				{% if user.is_staff %}
+				{% if user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro gestores' %}" class="{% if request.path == '/gestores/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
 					<span>Registro de Admin</span></a>
 				</li>
-				{% endif %}
-				{% if user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro docente' %}" class="{% if request.path == '/docentes/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
 					<span>Registro de docente</span></a>
@@ -34,7 +32,12 @@
 					<a href="{% url 'registro_institucion' %}" class="{% if request.path == '/institucion/registroinst/' %}active{% endif %}"><span class="las la-school"></span>
 					<span>Registro de institucion</span></a>
 				</li>
+				<li>
+					<a href="{% url 'informe global' %}" class="{% if request.path == '/informes/global/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Informe Global</span></a>
+				</li>
 				{% endif %}
+				{% if user.admin_docente %}
 				<li>
 					<a href="{% url 'registro de aceite' %}" class="{% if request.path == '/aceite/registro/' %}active{% endif %}"><span class="las la-clipboard-list"></span>
 					<span>Registro de aceite</span></a>
@@ -44,9 +47,24 @@
 					<span>Registro de estudiante</span></a>
 				</li>
 				<li>
-					<a href="{% url 'informe global' %}" class="{% if request.path == '/informes/global/' %}active{% endif %}"><span class="las la-money-check"></span>
-					<span>Informe</span></a>
+					<a href="{% url 'informe_local' %}" class="{% if request.path == '/informes/local/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Informe Local</span></a>
 				</li>
+				{% endif %}
+				{% if user.usuario_inst %}
+				<li>
+					<!-- <a href="{% url '' %}" class="{% if request.path == '' %}active{% endif %}"><span class="las la-money-check"></span> -->
+					<span>Informacion personal</span></a>
+				</li>
+				<li>
+					<a href="{% url 'premios:disponibles' %}" class="{% if request.path == '/premios/disponibles/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Premios disponibles</span></a>
+				</li>
+				<li>
+					<!-- <a href="{% url 'informe_local' %}" class="{% if request.path == '/informes/local/' %}active{% endif %}"><span class="las la-money-check"></span> -->
+					<span>Premios canjeados</span></a>
+				</li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>
