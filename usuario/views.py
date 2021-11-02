@@ -39,8 +39,9 @@ class home(LoginRequiredMixin,View):
             return HttpResponseRedirect(self.get_redirect_field_name())
 
 class home_estudiante(View):
+    template_name = 'home_estudiantes.html'
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Hola estudiante")
+        return render(request, self.template_name)
 
 class Login(FormView):
     template_name = 'login.html'
