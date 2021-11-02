@@ -1,35 +1,29 @@
+{% extends "index1.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block head_content %}
     <title>Disponibles</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
-</head>
-<body>
-    <div class ="contenedor-carrousel">
-        <h1>Premios disponibles:</h1>
-        <div class="cards">
-            
-            {% for premio in object_list %}
-                <div class="card">
-                    <div class="card-overlay">
-                        <div class="heading"><a class="button" href="">Reclamar</a></div>
-                    </div>
-                    <div class="card_content">
-                        <div class="card_title">{{ premio.nombre }}</div>
-                        <div class="card_stock">Restantes: {{ premio.cantidad }}</div>
-                        <div class="card_price">Puntos: {{ premio.precio }}</div>
-                    </div>
-                    <h3></h3>
-                    <img class="card-poster" src="{{ premio.imagen.url }}">
-                    <p></p>
+{% endblock %}
+{% block content %}
+<div class ="contenedor-carrousel">
+    <h1>Premios disponibles:</h1>
+    <div class="postcards">
+        
+        {% for premio in object_list %}
+            <div class="postcard">
+                <div class="postcard-overlay">
+                    <div class="heading"><a class="button" href="">Reclamar</a></div>
                 </div>
-            {% endfor %}
-        </div>
+                <div class="postcard_content">
+                    <div class="postcard_title">{{ premio.nombre }}</div>
+                    <div class="postcard_price">Puntos: {{ premio.precio }}</div>
+                    <div class="postcard_stock">Restantes: {{ premio.cantidad }}</div>
+                </div>
+                <h3></h3>
+                <img class="postcard-poster" src="{{ premio.imagen.url }}">
+                <p></p>
+            </div>
+        {% endfor %}
     </div>
-
-</body>
-</html>
+</div>
+{% endblock %}

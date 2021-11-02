@@ -53,7 +53,6 @@
 				{% endif %}
 				{% if user.usuario_inst %}
 				<li>
-					<!-- <a href="{% url '' %}" class="{% if request.path == '' %}active{% endif %}"><span class="las la-money-check"></span> -->
 					<span>Informacion personal</span></a>
 				</li>
 				<li>
@@ -61,7 +60,6 @@
 					<span>Premios disponibles</span></a>
 				</li>
 				<li>
-					<!-- <a href="{% url 'informe_local' %}" class="{% if request.path == '/informes/local/' %}active{% endif %}"><span class="las la-money-check"></span> -->
 					<span>Premios canjeados</span></a>
 				</li>
 				{% endif %}
@@ -90,8 +88,10 @@
 						<h4>{{ user.first_name }}&nbsp;{{ user.last_name }}</h4>
 						{% if user.admin_proyecto %}
 						<small>Administrador</small>
-						{% else %}
+						{% elif user.admin_docente %}
 						<small>Docente</small>
+						{% else %}
+						<small>Estudiante</small>
 						{% endif %}
 					</div>
 				</div></button>
