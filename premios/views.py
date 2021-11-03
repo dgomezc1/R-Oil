@@ -10,7 +10,7 @@ from django.http.response import JsonResponse
 from usuario.models import User
 from docente.models import Docente
 from gestores.models import Gestores
-from premios.models import Premio
+from premios.models import Premio, PremiosEntregados
 from estudiante.models import Estudiante
 
 # Forms
@@ -68,12 +68,22 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
         usuario = User.objects.get(username = request.user)
         estudiante = Estudiante.objects.get(user = usuario)
         premio = Premio.objects.get(id=request.POST["premio"])
+        premio.cantidad = premio.cantidad -1
+        premio.save()
         if(estudiante.puntos>=premio.precio):
             estudiante.puntos = estudiante.puntos -premio.precio
             estudiante.save()
+            codigo = generar_codigo_canjeo()
+            datos = {
+                "codigo_canjeo": codigo,
+                "estudiante_id":estudiante,
+                "premio_id" : premio,
+            }
+            PremiosEntregados.objects.create(**datos)
             data = {
                 "resultado":True,
-                "codigo": "Codigo cangeo: 123123123",
+                "codigo": "Codigo cangeo: "+codigo,
+                "puntos": "Puntos disponibles: "+str(estudiante.puntos)
             }
         else:
             data = {
