@@ -19,6 +19,8 @@ from premios.forms import FormularioPremio
 # Mixins
 from usuario.mixins import permisos_estudiante_aceite
 
+# Python
+import random
 # Create your views here.
 
 class registroPremios(LoginRequiredMixin,permisos_estudiante_aceite, View):
@@ -77,3 +79,13 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
                 "resultado":False,
             }
         return JsonResponse(data, safe = False)
+
+def generar_codigo_canjeo():
+    minus="abcdefghijklmnopqrstuvxyz"
+    mayus=minus.upper()
+    numeros="0123456789"
+
+    base=minus+mayus+numeros
+
+    muestra = random.sample(base, 8)
+    codigo = "".join(muestra)
