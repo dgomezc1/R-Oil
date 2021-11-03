@@ -71,6 +71,7 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
             data = {
                 "resultado":True,
                 "codigo": "Codigo cangeo: 123123123",
+                "puntos": "Puntos disponibles: "+str(estudiante.puntos)
             }
         else:
             data = {

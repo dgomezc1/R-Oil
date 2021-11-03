@@ -46,6 +46,8 @@
                         "icon":"success",
                         "text": data.codigo,
                     })
+                    titulo = document.getElementById("dashboard");
+                    titulo.innerHTML = data.puntos;
                 }else{
                     Swal.fire({
                         "title": "No tienes los puntos disponibles",
