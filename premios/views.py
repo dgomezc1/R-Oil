@@ -99,3 +99,4 @@ def generar_codigo_canjeo():
 
     muestra = random.sample(base, 8)
     codigo = "".join(muestra)
+    return codigo
