@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "home_estudiantes.html" %}
+{% load static %}
+{% block head_content %}
+    <title>Datos</title>
+    <link rel="stylesheet" href='{%static "css/style_estudiante.css" %}'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
+    
+{% endblock %}
+{% block content %}
+
     <p>Esto es el capo de capos </p>
-    <h1>{{ object_list }}</h1>
-</body>
-</html>
+    <h1>{{ Estudiante.ni }}</h1>
+    
+
+{% endblock %}
