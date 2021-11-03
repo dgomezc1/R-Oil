@@ -7,21 +7,23 @@
     
 {% endblock %}
 {% block content %}
-    <h1>Informacion personal</h1>
-    <p>Numero de identificacion </p>
-    <h2>{{ Estudiante.ni }}</h2>
-    <p>Institucion</p>
-    <h2>{{ Institucion }}</h2>
-    <p>Grado</p>
-    <h2>{{ Estudiante.grado }}</h2>
-    <p>Edad</p>
-    <h2>{{ Estudiante.edad }}</h2>
-    <p>Barrio</p>
-    <h2>{{ Estudiante.barrio }}</h2>
-    <p>Numero de telefono</p>
-    <h2>{{ Estudiante.telefono }}</h2>
-    <p>Litros de aceite recolectado</p>
-    <h2>{{ Estudiante.aceite_recolectado}}</h2>
+
+    
+    <center><h1>Informacion personal: </h1></center>
+    <center><FONT SIZE=5><p>Numero de identificacion: </p></FONT></center>
+    <center><h2>{{ Estudiante.ni }}</h2></center>
+    <center><FONT SIZE=5><p>Institucion:</p></FONT></center>
+    <center><h2>{{ Institucion }}</h2></center>
+    <center><FONT SIZE=5><p>Grado:</p></FONT></center>
+    <center><h2>{{ Estudiante.grado }}</h2></center>
+    <center><FONT SIZE=5><p>Edad:</p></FONT></center>
+    <center><h2>{{ Estudiante.edad }}</h2></center>
+    <center><FONT SIZE=5><p>Barrio:</p></FONT></center>
+    <center><h2>{{ Estudiante.barrio }}</h2></center>
+    <center><FONT SIZE=5><p>Numero de telefono:</p></FONT></center>
+    <center><h2>{{ Estudiante.telefono }}</h2></center>
+    <center><FONT SIZE=5><p>Litros de aceite recolectado:</p></FONT></center>
+    <center><h2>{{ Estudiante.aceite_recolectado}}</h2></center>
 <script>
     titulo = document.getElementById("dashboard");
     titulo.innerHTML = "Puntos disponibles: " + "{{Estudiante.puntos}}";
