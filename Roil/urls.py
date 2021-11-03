@@ -19,7 +19,11 @@ from django.urls import path
 from django.urls.conf import include
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import logout_then_login
+from django.conf import settings
+from django.conf.urls.static import static
 
+# Views
 from usuario.views import Login, logoutUsuario
 from estudiante import views as estudiante_views
 
@@ -27,13 +31,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('usuario.urls')),
     path('accounts/login/', Login.as_view(), name = "login"),
-    path('logout/', login_required(logoutUsuario), name="logout"),
+    path('logout/', logout_then_login, name="logout"),
 
-    path('estudiantes/', estudiante_views.signup_view, name='student_signup'),
+    path('estudiantes/', include('estudiante.urls')),
     path('docentes/', include('docente.urls')),
     path('institucion/', include('instituciones.urls')),
     path('aceite/', include('aceite.urls')),
     path('gestores/', include('gestores.urls')),
     path('informes/', include('informes.urls')),
-]
+    path('premios/', include(('premios.urls', 'premios'), namespace='premios')),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

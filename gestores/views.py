@@ -1,12 +1,17 @@
-from django.http import request
-from django.http.response import HttpResponse, HttpResponseRedirect
+# Django
 from django.shortcuts import render, HttpResponse
-from .forms import FormularioAdmin
-from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
+# Models
 from usuario.models import User
 from instituciones.models import Institucion
-from django.contrib.auth.mixins import LoginRequiredMixin
+
+# Forms
+from .forms import FormularioAdmin
+
+# Mixins
 from usuario.mixins import permisos_registro_admin
 
 # Create your views here.
@@ -27,6 +32,7 @@ class registro_gestor(LoginRequiredMixin,permisos_registro_admin,CreateView):
         if form.is_valid():
             institucion = Institucion.objects.get(nombre= request.POST.get("state"))
             form.crear_usuario(institucion)
-            return HttpResponse("Envio correcto de datos")
+            messages.success(request, "Registro de administrador exitoso")
+            return render(request, self.template_name, {'form':self.form_class, 'lista': op_institucion})
         else:
             return render(request, self.template_name, {'form':form, 'lista': op_institucion})

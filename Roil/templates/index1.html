@@ -2,11 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<style type="text/css">
-			a:link, a:visited, a:active {
-			text-decoration:none;
-			}
-		</style>
 		<meta charset="utf-8">
 		<title>R-Oil</title>
 		<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -24,13 +19,11 @@
 
 		<div class="sidebar-menu">
 			<ul>
-				{% if user.is_staff %}
+				{% if user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro gestores' %}" class="{% if request.path == '/gestores/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
-					<span>Registro de Administradores</span></a>
+					<span>Registro de Admin</span></a>
 				</li>
-				{% endif %}
-				{% if user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro docente' %}" class="{% if request.path == '/docentes/registro/' %}active{% endif %}"><span class="las la-chalkboard-teacher"></span>
 					<span>Registro de docente</span></a>
@@ -39,23 +32,41 @@
 					<a href="{% url 'registro_institucion' %}" class="{% if request.path == '/institucion/registroinst/' %}active{% endif %}"><span class="las la-school"></span>
 					<span>Registro de institucion</span></a>
 				</li>
+				<li>
+					<a href="{% url 'informe global' %}" class="{% if request.path == '/informes/global/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Informe Global</span></a>
+				</li>
 				{% endif %}
+				{% if user.admin_docente %}
 				<li>
 					<a href="{% url 'registro de aceite' %}" class="{% if request.path == '/aceite/registro/' %}active{% endif %}"><span class="las la-clipboard-list"></span>
 					<span>Registro de aceite</span></a>
 				</li>
 				<li>
-					<a href="{% url 'student_signup' %}" class="{% if request.path == '/estudiantes/' %}active{% endif %}"><span class="las la-user-graduate"></span>
+					<a href="{% url 'registro de estudiante' %}" class="{% if request.path == '/estudiantes/registro/' %}active{% endif %}"><span class="las la-user-graduate"></span>
 					<span>Registro de estudiante</span></a>
 				</li>
 				<li>
-					<a href="{% url 'informe global' %}" class="{% if request.path == '/informes/global/' %}active{% endif %}"><span class="las la-money-check"></span>
-					<span>Informe</span></a>
+					<a href="{% url 'informe_local' %}" class="{% if request.path == '/informes/local/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Informe Local</span></a>
 				</li>
+				{% endif %}
+				{% if user.usuario_inst %}
+				<li>
+					<span>Informacion personal</span></a>
+				</li>
+				<li>
+					<a href="{% url 'premios:disponibles' %}" class="{% if request.path == '/premios/disponibles/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Premios disponibles</span></a>
+				</li>
+				<li>
+					<span>Premios canjeados</span></a>
+				</li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<div class="main-content">
 		<header>
 			<h2>
@@ -71,15 +82,23 @@
 			</div>
 
 			<div class="user-wrapper">
-				<img src='{% static "imagenes/Logo R-Oil (1).jpg" %}' width="40px" height="40px" alt="">
-				<div>
-					<h4>{{ user.first_name }}&nbsp;{{ user.last_name }}</h4>
-					{% if user.admin_proyecto %}
-					<small>Administrador</small>
-					{% else %}
-					<small>Docente</small>
-					{% endif %}
-				</div>
+				<button ><div class="boton">
+					<img src='{% static "imagenes/Logo R-Oil (1).jpg" %}' width="40px" height="40px" alt="">
+					<div>
+						<h4>{{ user.first_name }}&nbsp;{{ user.last_name }}</h4>
+						{% if user.admin_proyecto %}
+						<small>Administrador</small>
+						{% elif user.admin_docente %}
+						<small>Docente</small>
+						{% else %}
+						<small>Estudiante</small>
+						{% endif %}
+					</div>
+				</div></button>
+				<ul>
+					<li><a href="{% url 'logout' %}">Salir</a></li>
+					<li><a>Copia de seguridad</a></li>
+				</ul>
 			</div>
 		</header>
 

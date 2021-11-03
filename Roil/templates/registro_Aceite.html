@@ -72,4 +72,14 @@
             </form>
 
         </div>
+        {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    "title": "{{m}}",
+                    "icon":"success"
+                })
+            </script>
+        {% endfor %}
+        {% endif %}
         {% endblock %}

@@ -1,12 +1,21 @@
-from django.http.response import HttpResponse, HttpResponseRedirect
+
+# Django
+from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponse
-from .forms import FormularioAceite
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from django.contrib import messages
+
+# Models
 from usuario.models import User
 from estudiante.models import Estudiante
 from docente.models import Docente
 from gestores.models import Gestores
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
+
+# Forms
+from aceite.forms import FormularioAceite
+
+# Mixins
 from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 
@@ -37,6 +46,7 @@ class registro_de_aceite2(LoginRequiredMixin, permisos_estudiante_aceite, View):
                 return render(request, self.template_name, {'form':form, 'error': error, 'act': True})
             else:
                 form.crear_registro(estudiante1, institucion)
-                return HttpResponse("Envio correcto de datos")
+                messages.success(request, "Registro de aceite exitoso")
+                return render(request, self.template_name, {'form':FormularioAceite})
 
         return render(request, self.template_name, {'form':form})

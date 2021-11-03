@@ -1,0 +1,27 @@
+{% extends "index1.html" %}
+{% load static %}
+{% block head_content %}
+    <title>Disponibles</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
+{% endblock %}
+{% block content %}
+<div class ="contenedor-carrousel">
+    <h1>Premios disponibles:</h1>
+    <div class="postcards">
+        
+        {% for premio in object_list %}
+            <div class="postcard">
+                <div class="postcard-overlay">
+                    <div class="heading"><a class="button" href="">Reclamar</a></div>
+                </div>
+                <div class="postcard_content">
+                    <div class="postcard_title">{{ premio.nombre }}</div>
+                    <div class="postcard_price">Puntos: {{ premio.precio }}</div>
+                    <div class="postcard_stock">Restantes: {{ premio.cantidad }}</div>
+                </div>
+                <img class="postcard-poster" src="{{ premio.imagen.url }}">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
