@@ -1,12 +1,9 @@
+{% extends "index1.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block head_content %}
     <title>Disponibles</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
+<<<<<<< HEAD
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -28,10 +25,29 @@
                     <h3></h3>
                     <img class="card-poster" src="{{ premio.imagen.url }}">
                     <p></p>
+=======
+{% endblock %}
+{% block content %}
+<div class ="contenedor-carrousel">
+    <h1>Premios disponibles:</h1>
+    <div class="postcards">
+        
+        {% for premio in object_list %}
+            <div class="postcard">
+                <div class="postcard-overlay">
+                    <div class="heading"><a class="button" href="">Reclamar</a></div>
+>>>>>>> 00d82b0ffb5c353e7d2c172dcf33e9f674899d40
                 </div>
-            {% endfor %}
-        </div>
+                <div class="postcard_content">
+                    <div class="postcard_title">{{ premio.nombre }}</div>
+                    <div class="postcard_price">Puntos: {{ premio.precio }}</div>
+                    <div class="postcard_stock">Restantes: {{ premio.cantidad }}</div>
+                </div>
+                <img class="postcard-poster" src="{{ premio.imagen.url }}">
+            </div>
+        {% endfor %}
     </div>
+<<<<<<< HEAD
     <script>
         function reclamar(premio){
             var token =  $('input[name="csrfmiddlewaretoken"]').attr('value')
@@ -49,3 +65,7 @@
     </script>
 </body>
 </html>
+=======
+</div>
+{% endblock %}
+>>>>>>> 00d82b0ffb5c353e7d2c172dcf33e9f674899d40
