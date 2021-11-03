@@ -10,6 +10,7 @@ from usuario.models import User
 from docente.models import Docente
 from gestores.models import Gestores
 from premios.models import Premio
+from estudiante.models import Estudiante
 
 # Forms
 from premios.forms import FormularioPremio
@@ -45,7 +46,16 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
     model = Premio
     template_name = 'premios/disponibles.html'
 
+    def get_price_institution(request):
+        usuario = User.objects.get(username = request.user)
+        institucion  =  (Estudiante.objects.get(user = usuario)).institucion
+        return Premio.objects.filter(institucion_id = institucion)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         #print(context)
         return context
+
+    def get(self, request, *args, **kwargs):
+        premios = premiosDisponibles.get_price_institution(request)
+        return render(request, self.template_name, {'premios': premios})
