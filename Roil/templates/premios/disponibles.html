@@ -3,16 +3,18 @@
 {% block head_content %}
     <title>Disponibles</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
 {% block content %}
 <div class ="contenedor-carrousel">
     <h1>Premios disponibles:</h1>
     <div class="postcards">
         
-        {% for premio in object_list %}
+        {% for premio in premios %}
             <div class="postcard">
                 <div class="postcard-overlay">
-                    <div class="heading"><a class="button" href="">Reclamar</a></div>
+                    {% csrf_token %}
+                    <div class="heading"><button onclick="reclamar('{{premio.id}}')" class="button">Reclamar</button></div>
                 </div>
                 <div class="postcard_content">
                     <div class="postcard_title">{{ premio.nombre }}</div>
@@ -24,4 +26,37 @@
         {% endfor %}
     </div>
 </div>
+<script>
+    function reclamar(premio){
+        var token =  $('input[name="csrfmiddlewaretoken"]').attr('value')
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data:{
+                'premio':premio
+            },
+            headers: {
+                'X-CSRFToken': token 
+            },
+        }).done(function (data){
+            if(!data.hasOwnProperty('error')){
+                if(data.resultado){
+                    Swal.fire({
+                        "title": "Premio reclamdo con exito",
+                        "icon":"success",
+                        "text": data.codigo,
+                    })
+                    titulo = document.getElementById("dashboard");
+                    titulo.innerHTML = data.puntos;
+                }else{
+                    Swal.fire({
+                        "title": "No tienes los puntos disponibles",
+                        "icon":"error",
+                        "text": data.codigo,
+                    })
+                }
+            }
+        })
+    }
+</script>
 {% endblock %}

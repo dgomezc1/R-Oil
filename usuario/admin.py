@@ -12,7 +12,7 @@ class EstudianteAdmin(admin.ModelAdmin):
         'user__first_name',
         'user__last_name',
     )
-    readonly_fields = ('aceite_recolectado', 'puntos')
+    #readonly_fields = ('aceite_recolectado', 'puntos')
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
