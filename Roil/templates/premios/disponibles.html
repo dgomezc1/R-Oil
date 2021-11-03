@@ -3,30 +3,10 @@
 {% block head_content %}
     <title>Disponibles</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
-<<<<<<< HEAD
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
-    <div class ="contenedor-carrousel">
-        <h1>Premios disponibles:</h1>
-        <div class="cards">
-            
-            {% for premio in object_list %}
-                <div class="card">
-                    <div class="card-overlay">
-                        {% csrf_token %}
-                        <div class="heading"><button onclick="reclamar('{{premio.id}}')" class="button">Reclamar</button></div>
-                    </div>
-                    <div class="card_content">
-                        <div class="card_title">{{ premio.nombre }}</div>
-                        <div class="card_stock">Restantes: {{ premio.cantidad }}</div>
-                        <div class="card_price">Puntos: {{ premio.precio }}</div>
-                    </div>
-                    <h3></h3>
-                    <img class="card-poster" src="{{ premio.imagen.url }}">
-                    <p></p>
-=======
 {% endblock %}
+<body>
 {% block content %}
 <div class ="contenedor-carrousel">
     <h1>Premios disponibles:</h1>
@@ -35,8 +15,8 @@
         {% for premio in object_list %}
             <div class="postcard">
                 <div class="postcard-overlay">
-                    <div class="heading"><a class="button" href="">Reclamar</a></div>
->>>>>>> 00d82b0ffb5c353e7d2c172dcf33e9f674899d40
+                    {% csrf_token %}
+                    <div class="heading"><button onclick="reclamar('{{premio.id}}')" class="button">Reclamar</button></div>
                 </div>
                 <div class="postcard_content">
                     <div class="postcard_title">{{ premio.nombre }}</div>
@@ -59,6 +39,22 @@
                 headers: {
                     'X-CSRFToken': token 
                 },
+            }).done(function (data){
+                if(!data.hasOwnProperty('error')){
+                    if(data.resultado){
+                        Swal.fire({
+                            "title": "Premio reclamdo con exito",
+                            "icon":"success",
+                            "text": data.codigo,
+                        })
+                    }else{
+                        Swal.fire({
+                            "title": "No tienes los puntos disponibles",
+                            "icon":"error",
+                            "text": data.codigo,
+                        })
+                    }
+                }
             })
         }
     </script>
