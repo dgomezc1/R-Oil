@@ -66,9 +66,11 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
         estudiante = Estudiante.objects.get(user = usuario)
         premio = Premio.objects.get(id=request.POST["premio"])
         if(estudiante.puntos>=premio.precio):
+            estudiante.puntos = estudiante.puntos -premio.precio
+            estudiante.save()
             data = {
                 "resultado":True,
-                "codigo": 123123123,
+                "codigo": "Codigo cangeo: 123123123",
             }
         else:
             data = {
