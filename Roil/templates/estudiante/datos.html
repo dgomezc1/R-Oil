@@ -3,13 +3,27 @@
 {% block head_content %}
     <title>Datos</title>
     <link rel="stylesheet" href='{%static "css/style_estudiante.css" %}'>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datosestudiantes.css' %}">
     
 {% endblock %}
 {% block content %}
-
-    <p>Esto es el capo de capos </p>
-    <h1>{{ Estudiante.ni }}</h1>
-    
-
+    <h1>Informacion personal</h1>
+    <p>Numero de identificacion </p>
+    <h2>{{ Estudiante.ni }}</h2>
+    <p>Institucion</p>
+    <h2>{{ Institucion }}</h2>
+    <p>Grado</p>
+    <h2>{{ Estudiante.grado }}</h2>
+    <p>Edad</p>
+    <h2>{{ Estudiante.edad }}</h2>
+    <p>Barrio</p>
+    <h2>{{ Estudiante.barrio }}</h2>
+    <p>Numero de telefono</p>
+    <h2>{{ Estudiante.telefono }}</h2>
+    <p>Litros de aceite recolectado</p>
+    <h2>{{ Estudiante.aceite_recolectado}}</h2>
+<script>
+    titulo = document.getElementById("dashboard");
+    titulo.innerHTML = "Puntos disponibles: " + "{{Estudiante.puntos}}";
+</script>
 {% endblock %}

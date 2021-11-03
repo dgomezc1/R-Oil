@@ -50,7 +50,8 @@ class datos_estudiante(View, LoginRequiredMixin, permisos_estudiante_aceite):
     def get(self, request, *args, **kwargs):
         usuario = User.objects.get(username = request.user)
         estudiante  = Estudiante.objects.get (user = usuario)
-        return render(request, self.template_name, {'Estudiante': estudiante})
+        
+        return render(request, self.template_name, {'Estudiante': estudiante, 'Institucion': estudiante.institucion.nombre})
 
 
 
