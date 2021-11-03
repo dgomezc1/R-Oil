@@ -1,6 +1,6 @@
 # Django
 from django.http.response import HttpResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -51,4 +51,5 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
         return context
 
     def post(self, request, *args, **kwargs):
-        print()
+        print(request.POST['premio'])
+        return redirect("home")

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disponibles</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/premiosdisponibles.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class ="contenedor-carrousel">
@@ -16,7 +17,8 @@
             {% for premio in object_list %}
                 <div class="card">
                     <div class="card-overlay">
-                        <div class="heading"><input type = "submit" class="button" value="Reclamar" id={{premio.id}}></div>
+                        {% csrf_token %}
+                        <div class="heading"><button onclick="reclamar('{{premio.id}}')" class="button">Reclamar</button></div>
                     </div>
                     <div class="card_content">
                         <div class="card_title">{{ premio.nombre }}</div>
@@ -30,6 +32,20 @@
             {% endfor %}
         </div>
     </div>
-
+    <script>
+        function reclamar(premio){
+            var token =  $('input[name="csrfmiddlewaretoken"]').attr('value')
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data:{
+                    'premio':premio
+                },
+                headers: {
+                    'X-CSRFToken': token 
+                },
+            })
+        }
+    </script>
 </body>
 </html>
