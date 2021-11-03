@@ -63,6 +63,8 @@ class Login(FormView):
         login(self.request, form.get_user())
         return super(Login, self).form_valid(form)
 
+
+
 def logoutUsuario(request):
     logout(request)
     return HttpResponseRedirect('/accounts/login/')
