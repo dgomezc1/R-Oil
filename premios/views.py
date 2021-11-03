@@ -61,8 +61,7 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         premios = premiosDisponibles.get_price_institution(request)
-        codigo = generar_codigo_canjeo()
-        return render(request, self.template_name, {'premios': premios, 'codigo':codigo})
+        return render(request, self.template_name, {'premios': premios})
         
     def post(self, request, *args, **kwargs):
         usuario = User.objects.get(username = request.user)
