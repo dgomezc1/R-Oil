@@ -50,7 +50,7 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
     def get_price_institution(request):
         usuario = User.objects.get(username = request.user)
         institucion  =  (Estudiante.objects.get(user = usuario)).institucion
-        return Premio.objects.filter(institucion_id = institucion)
+        return Premio.objects.filter(institucion_id = institucion).exclude(cantidad = 0)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
