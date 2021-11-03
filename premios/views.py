@@ -1,6 +1,6 @@
 # Django
 from django.http.response import HttpResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -59,3 +59,7 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         premios = premiosDisponibles.get_price_institution(request)
         return render(request, self.template_name, {'premios': premios})
+        
+    def post(self, request, *args, **kwargs):
+        print(request.POST['premio'])
+        return redirect("home")
