@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render, HttpResponse
 from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http.response import JsonResponse
 
 # Models
 from usuario.models import User
@@ -61,5 +62,16 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
         return render(request, self.template_name, {'premios': premios})
         
     def post(self, request, *args, **kwargs):
-        print(request.POST['premio'])
-        return redirect("home")
+        usuario = User.objects.get(username = request.user)
+        estudiante = Estudiante.objects.get(user = usuario)
+        premio = Premio.objects.get(id=request.POST["premio"])
+        if(estudiante.puntos>=premio.precio):
+            data = {
+                "resultado":True,
+                "codigo": 123123123,
+            }
+        else:
+            data = {
+                "resultado":False,
+            }
+        return JsonResponse(data, safe = False)
