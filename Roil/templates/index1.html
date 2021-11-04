@@ -37,7 +37,7 @@
 					<span>Informe Global</span></a>
 				</li>
 				{% endif %}
-				{% if user.admin_docente %}
+				{% if user.admin_docente or user.admin_proyecto %}
 				<li>
 					<a href="{% url 'registro de aceite' %}" class="{% if request.path == '/aceite/registro/' %}active{% endif %}"><span class="las la-clipboard-list"></span>
 					<span>Registro de aceite</span></a>
@@ -59,10 +59,6 @@
 				<li>
 					<a href="{% url 'premios:disponibles' %}" class="{% if request.path == '/premios/disponibles/' %}active{% endif %}"><span class="las la-money-check"></span>
 					<span>Premios disponibles</span></a>
-				</li>
-				<li>
-					
-					<span>Premios canjeados</span></a>
 				</li>
 				{% endif %}
 			</ul>
@@ -96,7 +92,9 @@
 				</div></button>
 				<ul>
 					<li><a href="{% url 'logout' %}">Salir</a></li>
+					{% if user.admin_proyecto %}
 					<li><a>Backup</a></li>
+					{% endif %}
 				</ul>
 			</div>
 		</header>

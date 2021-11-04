@@ -61,7 +61,9 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         premios = premiosDisponibles.get_price_institution(request)
-        return render(request, self.template_name, {'premios': premios})
+        usuario = User.objects.get(username = request.user)
+        estudiante = Estudiante.objects.get(user = usuario)
+        return render(request, self.template_name, {'premios': premios, 'puntos':estudiante.puntos})
         
     def post(self, request, *args, **kwargs):
         usuario = User.objects.get(username = request.user)

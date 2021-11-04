@@ -28,6 +28,10 @@
     </div>
 </div>
 <script>
+    titulo = document.getElementById("dashboard");
+    titulo.innerHTML = "Puntos disponibles: "+"{{puntos}}";
+</script>
+<script>
     function reclamar(premio){
         var token =  $('input[name="csrfmiddlewaretoken"]').attr('value')
         $.ajax({
