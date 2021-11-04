@@ -53,6 +53,7 @@
 				{% endif %}
 				{% if user.usuario_inst %}
 				<li>
+					<a href="{% url 'datos' %}" class="{% if request.path == '/estudiantes/datos/' %}active{% endif %}"><span class="las la-money-check"></span>
 					<span>Informacion personal</span></a>
 				</li>
 				<li>
@@ -60,6 +61,7 @@
 					<span>Premios disponibles</span></a>
 				</li>
 				<li>
+					
 					<span>Premios canjeados</span></a>
 				</li>
 				{% endif %}
@@ -76,10 +78,7 @@
 				Dashboard
 			</h2>
 
-			<div class="search-wrapper">
-				<span class="las la-search"></span>
-				<input type="search" placeholder="Search here"/>
-			</div>
+			
 
 			<div class="user-wrapper">
 				<button ><div class="boton">

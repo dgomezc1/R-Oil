@@ -8,6 +8,7 @@ from django.contrib import messages
 
 # Forms
 from estudiante.forms import SignupForm
+from estudiante.models import Estudiante
 
 #Models
 from instituciones.models import Institucion
@@ -41,3 +42,19 @@ class registro_estudiante(LoginRequiredMixin, permisos_estudiante_aceite,View):
             messages.success(request, "Registro de estudiante exitoso")
             return render(request, self.template_name, {'form':self.form_class})
         return render(request, self.template_name,{'form':form})
+
+class datos_estudiante(View, LoginRequiredMixin, permisos_estudiante_aceite):
+    template_name = 'estudiante/datos.html'
+    model = Estudiante
+
+    def get(self, request, *args, **kwargs):
+        usuario = User.objects.get(username = request.user)
+        estudiante  = Estudiante.objects.get (user = usuario)
+        
+        return render(request, self.template_name, {'Estudiante': estudiante, 'Institucion': estudiante.institucion.nombre})
+
+
+
+
+
+    

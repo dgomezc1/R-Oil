@@ -1,0 +1,31 @@
+{% extends "home_estudiantes.html" %}
+{% load static %}
+{% block head_content %}
+    <title>Datos</title>
+    <link rel="stylesheet" href='{%static "css/style_estudiante.css" %}'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datosestudiantes.css' %}">
+    
+{% endblock %}
+{% block content %}
+
+    
+    <center><h1>Informacion personal: </h1></center>
+    <center><FONT SIZE=5><p>Numero de identificacion: </p></FONT></center>
+    <center><h2>{{ Estudiante.ni }}</h2></center>
+    <center><FONT SIZE=5><p>Institucion:</p></FONT></center>
+    <center><h2>{{ Institucion }}</h2></center>
+    <center><FONT SIZE=5><p>Grado:</p></FONT></center>
+    <center><h2>{{ Estudiante.grado }}</h2></center>
+    <center><FONT SIZE=5><p>Edad:</p></FONT></center>
+    <center><h2>{{ Estudiante.edad }}</h2></center>
+    <center><FONT SIZE=5><p>Barrio:</p></FONT></center>
+    <center><h2>{{ Estudiante.barrio }}</h2></center>
+    <center><FONT SIZE=5><p>Numero de telefono:</p></FONT></center>
+    <center><h2>{{ Estudiante.telefono }}</h2></center>
+    <center><FONT SIZE=5><p>Litros de aceite recolectado:</p></FONT></center>
+    <center><h2>{{ Estudiante.aceite_recolectado}}</h2></center>
+<script>
+    titulo = document.getElementById("dashboard");
+    titulo.innerHTML = "Puntos disponibles: " + "{{Estudiante.puntos}}";
+</script>
+{% endblock %}
