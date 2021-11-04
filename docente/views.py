@@ -18,7 +18,7 @@ from usuario.mixins import permisos_institucion_docentes
 
 # Create your views here.
 
-class registro2(LoginRequiredMixin,permisos_institucion_docentes,CreateView):
+class registro_docentes(LoginRequiredMixin,permisos_institucion_docentes,CreateView):
     model = User
     form_class = FormularioDocente
     template_name = 'registro.html'

@@ -19,7 +19,7 @@ from aceite.forms import FormularioAceite
 from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 
-class registro_de_aceite2(LoginRequiredMixin, permisos_estudiante_aceite, View):
+class registro_de_aceite(LoginRequiredMixin, permisos_estudiante_aceite, View):
     form_class  = FormularioAceite()
     template_name = 'registro_Aceite.html'
 
