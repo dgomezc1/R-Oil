@@ -50,6 +50,10 @@
 					<a href="{% url 'informe_local' %}" class="{% if request.path == '/informes/local/' %}active{% endif %}"><span class="las la-money-check"></span>
 					<span>Informe Local</span></a>
 				</li>
+				<li>
+					<a href="{% url 'eliminar_usuario' %}" class="{% if request.path == '/home/eliminacionUsuario/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<span>Eliminar Usuario</span></a>
+				</li>
 				{% endif %}
 				{% if user.usuario_inst %}
 				<li>

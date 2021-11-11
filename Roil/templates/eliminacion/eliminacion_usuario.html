@@ -1,0 +1,58 @@
+{% extends "index1.html" %}
+{% load static %}
+{% block content %}
+
+    <head>
+        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'> 
+    </head>
+
+        <div>
+            <div class="titulo">
+                <h2>Eliminacion de Usuario</h2>
+            </div>
+            <form action="" method="POST" class= "basic-grey">
+                {% csrf_token %}
+                <div class = "opciones">
+                    <label for="{{form.username.id_for_label}}">Nombre de Usuario</label>
+                    <div class="form-warp">
+                        {{form.username}}
+                    </div>
+                    {% if form.username.errors %}
+                    <ul>
+                        {% for error in form.username.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class = "opciones">
+                    <label for="{{form.ni.id_for_label}}">Numero de Identificacion</label>
+                    <div class="form-warp">
+                        {{form.ni}}
+                    </div>
+                    {% if form.ni.errors %}
+                    <ul>
+                        {% for error in form.ni.errors %}
+                            <li class="errores">{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="boton">
+                    <input type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+        {% if messages %}
+        {% for m in messages %}
+                <script>
+                    Swal.fire({
+                        "title": "{{m}}",
+                        "icon":"{{m.tags}}"
+                    })
+                </script>
+        {% endfor %}
+        {% endif %}
+        {% endblock %}
+
+

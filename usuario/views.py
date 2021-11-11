@@ -11,12 +11,18 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
 from django.contrib import messages
+from docente.models import Docente
+from estudiante.models import Estudiante
+from gestores.models import Gestores
+from .models import User
+from django.contrib import messages
 
 # Forms
-from usuario.forms import FormularioLogin
+from usuario.forms import Formulario_eliminacion, FormularioLogin
 
 # Models
 from instituciones.models import Institucion
+from usuario.mixins import permisos_estudiante_aceite
 # Create your views here.
 
 class home(LoginRequiredMixin,View):
@@ -63,7 +69,46 @@ class Login(FormView):
         login(self.request, form.get_user())
         return super(Login, self).form_valid(form)
 
+class Eliminar_usuario(LoginRequiredMixin,permisos_estudiante_aceite,View):
+    form = Formulario_eliminacion()
+    template_name="eliminacion/eliminacion_usuario.html"
 
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name, {'form':self.form})
+
+    def post(self, request, *args, **kwargs):
+        form  = Formulario_eliminacion(request.POST)
+        if form.is_valid():
+            username_eliminado = form.cleaned_data['username']
+            usuario_eliminado = User.objects.get(username = username_eliminado)
+            if usuario_eliminado.usuario_inst:
+                estudiante_eliminado = Estudiante.objects.get(user = usuario_eliminado)
+                #Si es un docente el que va a eliminar
+                if request.user.admin_docente:
+                    docente = User.objects.get(username = request.user)
+                    institucion_docente  =  (Docente.objects.get(user = docente)).institucion
+                    if institucion_docente == estudiante_eliminado.institucion:
+                        usuario_eliminado.delete()
+                        messages.success(request, "El estudiante ha sido eliminado con exito")
+                        return render(request, self.template_name, {'form':Formulario_eliminacion()})
+                    else:
+                        messages.error(request, "El estudiante no corresponde a su institucion")
+                #Si es un administrador el que va a eliminar
+                elif request.user.admin_proyecto:
+                    usuario_eliminado.delete()
+                    messages.success(request, "El estudiante ha sido eliminado con exito")
+                    return render(request, self.template_name, {'form':Formulario_eliminacion()})
+                else:
+                    messages.error(request, "No cuenta con los permisos para eliminar usuarios")
+            #Si vamos a eliminar un Docente o administrador
+            else:
+                if request.user.admin_proyecto:
+                    User.objects.get(username = username_eliminado).delete()
+                    messages.success(request, "Usuario eliminado con exito")
+                    return render(request, self.template_name, {'form':Formulario_eliminacion()})
+                else:
+                    messages.error(request, "No cuenta con los permisos para eliminar docentes")
+        return render(request, self.template_name, {'form':form})
 
 def logoutUsuario(request):
     logout(request)
