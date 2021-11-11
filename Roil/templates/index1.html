@@ -36,6 +36,10 @@
 					<a href="{% url 'informe global' %}" class="{% if request.path == '/informes/global/' %}active{% endif %}"><span class="las la-money-check"></span>
 					<span>Informe Global</span></a>
 				</li>
+				<li>
+					<a href="{% url 'eliminacion_inst' %}" class="{% if request.path == '/institucion/eliminacionInst/' %}active{% endif %}"><span class="las la-ban"></span>
+					<span>Eliminacion Institucion</span></a>
+				</li>
 				{% endif %}
 				{% if user.admin_docente or user.admin_proyecto %}
 				<li>
@@ -51,7 +55,7 @@
 					<span>Informe Local</span></a>
 				</li>
 				<li>
-					<a href="{% url 'eliminar_usuario' %}" class="{% if request.path == '/home/eliminacionUsuario/' %}active{% endif %}"><span class="las la-money-check"></span>
+					<a href="{% url 'eliminar_usuario' %}" class="{% if request.path == '/home/eliminacionUsuario/' %}active{% endif %}"><span class="las la-exclamation-triangle"></span>
 					<span>Eliminar Usuario</span></a>
 				</li>
 				{% endif %}
