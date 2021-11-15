@@ -61,12 +61,16 @@
 				{% endif %}
 				{% if user.usuario_inst %}
 				<li>
-					<a href="{% url 'datos' %}" class="{% if request.path == '/estudiantes/datos/' %}active{% endif %}"><span class="las la-money-check"></span>
-					<span>Informacion personal</span></a>
+					<a href="{% url 'datos' %}" class="{% if request.path == '/estudiantes/datos/' %}active{% endif %}"><span class="las la-address-card"></span>
+					<span>Informacion Personal</span></a>
 				</li>
 				<li>
-					<a href="{% url 'premios:disponibles' %}" class="{% if request.path == '/premios/disponibles/' %}active{% endif %}"><span class="las la-money-check"></span>
-					<span>Premios disponibles</span></a>
+					<a href="{% url 'premios:disponibles' %}" class="{% if request.path == '/premios/disponibles/' %}active{% endif %}"><span class="las la-shopping-cart"></span>
+					<span>Premios Disponibles</span></a>
+				</li>
+				<li>
+					<a href="{% url 'premios:canjeados' %}" class="{% if request.path == '/premios/canjeados/' %}active{% endif %}"><span class="las la-cart-arrow-down"></span>
+					<span>Premios Canjeados</span></a>
 				</li>
 				{% endif %}
 			</ul>

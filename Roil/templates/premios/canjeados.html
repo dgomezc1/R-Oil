@@ -1,0 +1,34 @@
+{% extends "home_estudiantes.html" %}
+{% load static %}
+{% block head_content %}
+    <title>Disponibles</title>
+    <link rel="stylesheet" href='{%static "css/style_estudiante.css" %}'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/premioscanjeados.css' %}">
+{% endblock %}
+{% block content %}
+<div class ="contenedor-carrousel">
+    <h1>Premios Canjeados:</h1>
+    <div class="postcards">
+        {% for canjeado in premios_canjeados %}
+
+            {% for premio in premios %}
+                {% if canjeado.premio_id_id == premio.id %} 
+                    <div class="postcard">
+                        <div class="postcard_content">
+                            <div class="postcard_title">{{ premio.nombre }}</div>
+                            <div class="postcard_code">Codigo de Canjeo: {{ canjeado.codigo_canjeo }}</div>
+                            <div class="postcard_date">Fecha: {{ canjeado.fecha }}</div>
+                        </div>
+                        <img class="postcard-poster" src="{{ premio.imagen.url }}">
+                    </div>
+                    {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+<script>
+    titulo = document.getElementById("dashboard");
+    titulo.innerHTML = "Puntos disponibles: "+"{{puntos}}";
+</script>
+
+{% endblock %}

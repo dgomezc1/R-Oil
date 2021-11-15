@@ -21,6 +21,7 @@ from usuario.mixins import permisos_estudiante_aceite
 
 # Python
 import random
+
 # Create your views here.
 
 class registroPremios(LoginRequiredMixin,permisos_estudiante_aceite, View):
@@ -91,6 +92,32 @@ class premiosDisponibles(ListView, LoginRequiredMixin):
                 "resultado":False,
             }
         return JsonResponse(data, safe = False)
+
+class premiosCanjeados(ListView, LoginRequiredMixin):
+    model = PremiosEntregados
+    template_name = 'premios/canjeados.html'
+
+    def get_premios_canjeados(request):
+        usuario = User.objects.get(username = request.user)
+        estudiante  =  Estudiante.objects.get(user = usuario)
+        return PremiosEntregados.objects.filter(estudiante_id = estudiante)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #print(context)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        premios_canjeados = premiosCanjeados.get_premios_canjeados(request)
+        usuario = User.objects.get(username = request.user)
+        estudiante = Estudiante.objects.get(user = usuario)
+        premios = Premio.objects.filter(institucion_id_id = estudiante.institucion)
+        return render(
+            request, 
+            self.template_name, 
+            {'premios_canjeados': premios_canjeados, 'puntos':estudiante.puntos, 'premios': premios,}
+        )
+
 
 def generar_codigo_canjeo():
     minus="abcdefghijklmnopqrstuvxyz"
