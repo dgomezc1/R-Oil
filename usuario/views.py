@@ -11,18 +11,20 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
 from django.contrib import messages
-from docente.models import Docente
-from estudiante.models import Estudiante
-from gestores.models import Gestores
-from .models import User
-from django.contrib import messages
 
 # Forms
 from usuario.forms import Formulario_eliminacion, FormularioLogin
 
 # Models
 from instituciones.models import Institucion
+from usuario.models import User
+from docente.models import Docente
+from estudiante.models import Estudiante
+from gestores.models import Gestores
+
+# Mixins
 from usuario.mixins import permisos_estudiante_aceite
+
 # Create your views here.
 
 class home(LoginRequiredMixin,View):

@@ -2,7 +2,7 @@
 from django.urls import path
 
 # Views
-from premios.views import registroPremios, premiosDisponibles
+from premios.views import registroPremios, premiosDisponibles, premiosCanjeados
 
 
 urlpatterns = [
@@ -15,5 +15,10 @@ urlpatterns = [
         route='disponibles/', 
         view= premiosDisponibles.as_view(),
         name='disponibles'
+    ),
+    path(
+        route='canjeados/', 
+        view= premiosCanjeados.as_view(),
+        name='canjeados'
     ),
 ]
