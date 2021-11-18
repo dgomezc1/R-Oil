@@ -21,5 +21,9 @@ urlpatterns = [
         view= premiosCanjeados.as_view(),
         name='canjeados'
     ),
-    path(route='reclamo/', view=reclamarPremio.as_view(), name="reclamo"),
+    path(
+        route='reclamo/', 
+        view=reclamarPremio.as_view(), 
+        name="reclamo"
+    ),
 ]

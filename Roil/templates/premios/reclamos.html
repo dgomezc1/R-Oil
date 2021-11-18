@@ -1,30 +1,27 @@
 {% extends "index1.html" %}
 {% load static %}
+{% block head_content %}
+    <title>Canje de Premios</title>
+    <link rel="stylesheet" href='{%static "css/registrodocentes.css" %}'>
 
+{% endblock %}
 {% block content %}
-    <head>
-        <link rel="stylesheet" href='{% static "css/registrodocentes.css" %}'>
-    </head>
-    <body>
-        <div>
-            <div class="titulo">
-                <h2>Reclamo de Premio</h2>
+    <div class="titulo">
+        <h2>Reclamo de Premio</h2>
+    </div>
+    <form method="POST" class="basic-grey">
+        {% csrf_token %}
+        <div class = "opciones">
+            <p>Recuerde que el sistema es sensible a las mayusculas, por favor ingrese correctamente el codigo</p>
+            <label>Ingrese el codigo de canjeo</label>
+            <div class="form-warp">
+                <input type="text" name="codigo" id="codigo">
             </div>
-            <form method="POST" class="basic-grey">
-                {% csrf_token %}
-                <div class = "opciones">
-                    <p>Recuerde que el progama es sensible a las mayusculas, por favor ingrese correctamente el codigo</p>
-                    <label>Ingrese el codigo de canjeo</label>
-                    <div class="form-warp">
-                        <input type="text" name="codigo" id="codigo">
-                    </div>
-                <div class="boton">
-                    <input type="submit" value="Enviar">
-                </div>
-            </form>
-
+        <div class="boton">
+            <input type="submit" value="Enviar">
         </div>
-        {% if messages %}
+    </form>    
+    {% if messages %}
         {% for m in messages %}
             <script>
                 Swal.fire({
@@ -33,5 +30,6 @@
                 })
             </script>
         {% endfor %}
-        {% endif %}
+    {% endif %}       
+        
 {% endblock %}
