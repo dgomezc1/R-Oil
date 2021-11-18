@@ -140,13 +140,24 @@ class reclamarPremio(LoginRequiredMixin,permisos_estudiante_aceite, View):
     def post(self, request, *args, **kwargs):
         codigo = request.POST["codigo"]
         if PremiosEntregados.objects.filter(codigo_canjeo = codigo).exists():
-            if (PremiosEntregados.objects.get(codigo_canjeo = codigo)).entregado:
-                messages.warning(request, "El premio ya fue entregado")
+            premio = PremiosEntregados.objects.get(codigo_canjeo = codigo)
+            estudiante = premio.estudiante_id
+            usuario_docente = User.objects.get(username = request.user)
+            if request.user.admin_proyecto:
+                docente = Gestores.objects.get(user = usuario_docente)
             else:
-                premio = PremiosEntregados.objects.get(codigo_canjeo = codigo)
-                premio.entregado = True
-                premio.save()
-                messages.success(request, "Por favor realice la entrega, premio canjeado exitosamente")
+                docente = Docente.objects.get(user = usuario_docente)
+            if docente.institucion == estudiante.institucion:
+                if (PremiosEntregados.objects.get(codigo_canjeo = codigo)).entregado:
+                    messages.warning(request, "El premio ya fue entregado")
+                else:
+                    premio = PremiosEntregados.objects.get(codigo_canjeo = codigo)
+                    premio.entregado = True
+                    premio.save()
+                    tipo_premio = premio.premio_id
+                    messages.success(request, "Por favor realice la entrega de "+ str(tipo_premio.nombre) +", premio canjeado exitosamente")
+            else:
+                messages.warning(request, "El premio no corresponde a su institucion")
         else:
             messages.error(request, "Este codigo de canjeo no existe")
         return render(request, self.template_name)

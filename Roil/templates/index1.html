@@ -58,6 +58,10 @@
 					<a href="{% url 'eliminar_usuario' %}" class="{% if request.path == '/home/eliminacionUsuario/' %}active{% endif %}"><span class="las la-exclamation-triangle"></span>
 					<span>Eliminar Usuario</span></a>
 				</li>
+				<li>
+					<a href="{% url 'premios:reclamo' %}" class="{% if request.path == '/premios/reclamo/' %}active{% endif %}"><span class="las la-save"></span>
+					<span>Reclamo premios</span></a>
+				</li>
 				{% endif %}
 				{% if user.usuario_inst %}
 				<li>
@@ -72,6 +76,7 @@
 					<a href="{% url 'premios:canjeados' %}" class="{% if request.path == '/premios/canjeados/' %}active{% endif %}"><span class="las la-cart-arrow-down"></span>
 					<span>Premios Canjeados</span></a>
 				</li>
+				
 				{% endif %}
 			</ul>
 		</div>
