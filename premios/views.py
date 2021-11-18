@@ -154,7 +154,8 @@ class reclamarPremio(LoginRequiredMixin,permisos_estudiante_aceite, View):
                     premio = PremiosEntregados.objects.get(codigo_canjeo = codigo)
                     premio.entregado = True
                     premio.save()
-                    messages.success(request, "Por favor realice la entrega, premio canjeado exitosamente")
+                    tipo_premio = premio.premio_id
+                    messages.success(request, "Por favor realice la entrega de "+ str(tipo_premio.nombre) +", premio canjeado exitosamente")
             else:
                 messages.warning(request, "El premio no corresponde a su institucion")
         else:
