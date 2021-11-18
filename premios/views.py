@@ -5,6 +5,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import JsonResponse
+from django.contrib import messages
 
 # Models
 from usuario.models import User
@@ -129,3 +130,23 @@ def generar_codigo_canjeo():
     muestra = random.sample(base, 8)
     codigo = "".join(muestra)
     return codigo
+
+class reclamarPremio(LoginRequiredMixin,permisos_estudiante_aceite, View):
+    template_name="premios/reclamos.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        codigo = request.POST["codigo"]
+        if PremiosEntregados.objects.filter(codigo_canjeo = codigo).exists():
+            if (PremiosEntregados.objects.get(codigo_canjeo = codigo)).entregado:
+                messages.warning(request, "El premio ya fue entregado")
+            else:
+                premio = PremiosEntregados.objects.get(codigo_canjeo = codigo)
+                premio.entregado = True
+                premio.save()
+                messages.success(request, "Por favor realice la entrega, premio canjeado exitosamente")
+        else:
+            messages.error(request, "Este codigo de canjeo no existe")
+        return render(request, self.template_name)

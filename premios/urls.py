@@ -2,7 +2,7 @@
 from django.urls import path
 
 # Views
-from premios.views import registroPremios, premiosDisponibles, premiosCanjeados
+from premios.views import reclamarPremio, registroPremios, premiosDisponibles, premiosCanjeados
 
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
         view= premiosCanjeados.as_view(),
         name='canjeados'
     ),
+    path(route='reclamo/', view=reclamarPremio.as_view(), name="reclamo"),
 ]

@@ -36,6 +36,7 @@ class PremiosEntregados(models.Model):
     fecha = models.DateField('fecha', auto_now_add=True, null=False, blank=False)
     estudiante_id = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     premio_id = models.ForeignKey(Premio, on_delete=models.CASCADE)
+    entregado = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Premios Entregados'
